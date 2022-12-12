@@ -17,7 +17,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Tom Holland',
             'dob' => date('1996-06-01'),
-            'image_url' => '2qhIDp44cAqP2clOgt2afQI07X8.jpg',
+            'image_url' => 'tomholland.jpg',
             'place_of_birth' => 'Surrey, England, UK',
             'gender' => 'Male',
             'popularity' => 135.488,
@@ -27,7 +27,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Zendaya',
             'dob' => date('1996-09-01'),
-            'image_url' => 'jHWlWOasiqKS8JI40g9GDH5X6AL.jpg',
+            'image_url' => 'zendaya.jpg',
             'place_of_birth' => 'Oakland, California, USA',
             'gender' => 'Female',
             'popularity' => 57.107,
@@ -37,7 +37,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Benedict Cumberbatch',
             'dob' => date('1976-07-19'),
-            'image_url' => 'fBEucxECxGLKVHBznO0qHtCGiMO.jpg',
+            'image_url' => 'benedictcumberbatch.jpg',
             'place_of_birth' => 'London, England, UK',
             'gender' => 'Male',
             'popularity' => 34.786,
@@ -47,7 +47,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'María Cecilia Botero',
             'dob' => date('1955-05-13'),
-            'image_url' => 'nH6eBBgv1PI9J6Ftkn01ny1TMt1.jpg',
+            'image_url' => 'mariacecilliabotero.jpg',
             'place_of_birth' => 'Medellín, Colombia',
             'gender' => 'Female',
             'popularity' => 13.8,
@@ -57,7 +57,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'John Leguizamo',
             'dob' => date('1964-07-22'),
-            'image_url' => '2P0LTIKMUZn7BG1q9S9e5FZFZkn.jpg',
+            'image_url' => 'johnleguizamo.jpg',
             'place_of_birth' => 'Bogotá, Colombia',
             'gender' => 'Male',
             'popularity' => 6.437,
@@ -67,7 +67,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Keanu Reeves',
             'dob' => date('1964-09-02'),
-            'image_url' => 'rRdru6REr9i3WIHv2mntpcgxnoY.jpg',
+            'image_url' => 'keanureeves.jpg',
             'place_of_birth' => 'Beirut, Lebanon',
             'gender' => 'Male',
             'popularity' => 123.653,
@@ -77,7 +77,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Carrie-Anne Moss',
             'dob' => date('1967-08-21'),
-            'image_url' => 'xD4jTA3KmVp5Rq3aHcymL9DUGjD.jpg',
+            'image_url' => 'carrieannemoss.jpg',
             'place_of_birth' => 'Burnaby, British Columbia, Canada',
             'gender' => 'Female',
             'popularity' => 119.627,
@@ -87,7 +87,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Tom Hardy',
             'dob' => date('1977-09-15'),
-            'image_url' => '9bXUMLOBCcnhcUGtfw0pdqbvpiH.jpg',
+            'image_url' => 'tomhardy.jpg',
             'place_of_birth' => 'Hammersmith, London, England, UK',
             'gender' => 'Male',
             'popularity' => 34.588,
@@ -97,7 +97,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Woody Harrelson',
             'dob' => date('1961-07-23'),
-            'image_url' => 'igxYDQBbTEdAqaJxaW6ffqswmUU.jpg',
+            'image_url' => 'woodyharrelson.jpg',
             'place_of_birth' => 'Midland, Texas, USA',
             'gender' => 'Male',
             'popularity' => 13.092,
@@ -107,7 +107,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Kaya Scodelario',
             'dob' => date('1992-03-13'),
-            'image_url' => 'oKsGrXKGrcVoQJQ6pbjZDPOQJcM.jpg',
+            'image_url' => 'kayascodelario.jpg',
             'place_of_birth' => 'London, England, U.K.',
             'gender' => 'Female',
             'popularity' => 32.381,
@@ -117,7 +117,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Robbie Amell',
             'dob' => date('1988-04-21'),
-            'image_url' => '5MPx1TEdgPs9UEXV65nd80JikSH.jpg',
+            'image_url' => 'robbieamell.jpg',
             'place_of_birth' => 'Toronto, Ontario,  Canada',
             'gender' => 'Male',
             'popularity' => 14.645,
@@ -127,7 +127,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Darby Camp',
             'dob' => date('2007-07-14'),
-            'image_url' => 'bhke7AjdmRdhW7Gw7X6fCBeYwNs.jpg',
+            'image_url' => 'darbycamp.jpg',
             'place_of_birth' => 'None',
             'gender' => 'Female',
             'popularity' => 6.18,
@@ -137,7 +137,7 @@ class ActorSeeder extends Seeder
         Actor::create([
             'name' => 'Jack Whitehall',
             'dob' => date('1988-07-07'),
-            'image_url' => '8xRKz1tiVyjLxIMuD0ckOmF3xMY.jpg',
+            'image_url' => 'jackwhitehall.jpg',
             'place_of_birth' => 'London, England, UK',
             'gender' => 'Male',
             'popularity' => 14.181,

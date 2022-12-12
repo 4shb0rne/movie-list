@@ -70,7 +70,7 @@
                 @forelse ($actors as $actor)
                     <div class="cast-card card">
                         <a href="{{ route('show-actor-detail', $actor->actor_id) }}">
-                            <img src="{{ $actor->image_url }}" class="cast-image w-100">
+                            <img src="/storage/actors/{{ $actor->image_url }}" class="cast-image w-100">
                         </a>
                         <div class="card-body p-3">
                             <h5 class="card-title">{{ $actor->name }}</h5>
