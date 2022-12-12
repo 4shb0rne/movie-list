@@ -40,6 +40,9 @@ class MovieController extends Controller
                 $moviesGenres = Movie::join('show_genre', 'shows.id', '=', 'show_genre.show_id')
                     ->join('genres', 'show_genre.genre_id', '=', 'genres.id')
                     ->where('genres.name', $request->genre)->get();
+                foreach($moviesGenres as $movieGenre){
+                    $movieGenre->id = $movieGenre->show_id;
+                }
                 $view = view('movie.data', ['movies' => $moviesGenres])->render();
                 return response()->json(['html' => $view]);
             } else {
@@ -48,6 +51,9 @@ class MovieController extends Controller
                     ->where('genres.name', $request->genre)
                     ->where('shows.title', 'LIKE', '%' . $request->search . '%')->get();
                 $view = view('movie.data', ['movies' => $moviesGenres])->render();
+                foreach($moviesGenres as $movieGenre){
+                    $movieGenre->id = $movieGenre->show_id;
+                }
                 return response()->json(['html' => $view]);
             }
         } else if ($request->ajax() && !$request->genre && $request->sort) {
