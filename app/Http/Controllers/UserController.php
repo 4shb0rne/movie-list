@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -15,7 +16,7 @@ class UserController extends Controller
 
     public function update(Request $request)
     {
-        $user = Auth::user();
+        $user = User::find(Auth::user()->id);
         if ($request->url) {
             $attr = $request->validate([
                 'url' => ['required']

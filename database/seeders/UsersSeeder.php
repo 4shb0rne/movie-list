@@ -17,20 +17,12 @@ class UsersSeeder extends Seeder
     {
         User::create([
             'name' => 'admin',
-            'email' => 'admin@admin.com',
+            'email' => 'admin@movielistadmin.com',
             'password' => bcrypt('admin'),
             'dob' => Carbon::now(),
             'date_joined' => Carbon::now(),
             'phone' => '081111111111',
-        ]);
-
-        User::create([
-            'name' => 'hans',
-            'email' => 'hans@mail.com',
-            'password' => bcrypt('hansgeovani2'),
-            'dob' => Carbon::now(),
-            'date_joined' => Carbon::now(),
-            'phone' => '081212341235',
+            'role' => 'admin'
         ]);
     }
 }

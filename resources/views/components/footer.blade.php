@@ -19,7 +19,7 @@
             <li><a href="https://help.netflix.com/en/contactus" target="_blank">Contact Us</a></li>
             <li><a href="https://help.netflix.com/en/" target="_blank">About Us</a></li>
         </ul>
-        <p class="footer-copyright">Copyright &copy; 2021 <a href="{{ route('show-home') }}"
+        <p class="footer-copyright">Copyright &copy; 2022 <a href="{{ route('show-home') }}"
                 class="fw-bolder footer-link">Movie<span class="text-light">List</span></a> All
             Rights
             Reserved

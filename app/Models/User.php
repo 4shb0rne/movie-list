@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'user_id',
         'date_joined',
+        'role'
     ];
 
     public $timestamps = false;
@@ -51,6 +52,6 @@ class User extends Authenticatable
 
     public function isAdmin()
     {
-        return $this->name == "admin";
+        return $this->role == "admin";
     }
 }

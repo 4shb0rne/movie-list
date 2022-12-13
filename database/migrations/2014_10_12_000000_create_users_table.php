@@ -22,6 +22,7 @@ class CreateUsersTable extends Migration
             $table->timestamp('date_joined')->useCurrent();
             $table->string('phone')->nullable();
             $table->longText('image_url')->nullable();
+            $table->string('role');
             $table->rememberToken();
         });
     }
