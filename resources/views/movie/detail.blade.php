@@ -8,7 +8,15 @@
 @section('content')
     <section class='main-class container-fluid'>
         <div class="bg-image"
-            style='background-image: url({{ asset('storage/movies/bg-image/' . $movie->bg_url) }});'>
+            style='
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.3),
+                    rgba(0, 0, 0, 0.7)),
+                    url({{ asset('storage/movies/bg-image/' . $movie->bg_url) }})
+                    no-repeat;
+            background-size: cover;
+            background-position: center;'>
             <div class="row show-detail" id='show-detail'>
                 <div class='col'>
                     <img src="{{ asset('storage/movies/thumbnail/' . $movie->image_url) }}" class='show-image'>
@@ -47,12 +55,13 @@
                     </div>
                     <div class='d-flex show-info poppins'>
                         <div>
-                            <div class='show-info-score'>{{ $movie->rating }}</div>
+                            <div class='show-info-score'>
+                                {{ $movie->rating }}
+                            </div>
                         </div>
                         <div>
                             <div><i class="far fa-calendar-alt text-primary"></i></div>
-                            <div class='show-info-tag'>Release Year</div>
-                            <div class='show-info-score'>{{ $movie->release_date->format('Y') }}</div>
+                            <div class='show-info-score'>{{ $movie->release_date->format('d/m/Y') }}</div>
                         </div>
                     </div>
                     <div class='show-description roboto'>

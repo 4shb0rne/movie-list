@@ -141,7 +141,7 @@ class MovieController extends Controller
         $movies = Movie::get();
 
 
-        return view('movie.show', compact('movie', 'actors', 'genres', 'movies'));
+        return view('movie.detail', compact('movie', 'actors', 'genres', 'movies'));
     }
 
     public function create()
