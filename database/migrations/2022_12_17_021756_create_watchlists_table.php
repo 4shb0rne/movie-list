@@ -14,8 +14,14 @@ class CreateWatchlistsTable extends Migration
     public function up()
     {
         Schema::create('watchlists', function (Blueprint $table) {
-            $table->foreignId('show_id')->constrained();
-            $table->foreignId('user_id')->constrained();
+            $table->foreignId('movie_id')->constrained('movies')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
+            $table->foreignId('user_id')->constrained('users')
+                ->onDelete('cascade')
+                ->onUpdate('cascade');
+
             $table->string('status');
         });
     }

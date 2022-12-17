@@ -17,11 +17,11 @@ class CreateActorsTable extends Migration
             $table->id();
             $table->string('name');
             $table->date('dob');
-            $table->longText('image_url');
+            $table->longText('image_url')->nullable();
             $table->string('place_of_birth');
             $table->string('gender');
             $table->decimal('popularity', 10, 2);
-            $table->longText('biography');
+            $table->longText('biography')->nullable();
         });
     }
 

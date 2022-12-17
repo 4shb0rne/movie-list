@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use App\Models\Genre;
 use Illuminate\Database\Seeder;
 
-class GenresSeeder extends Seeder
+class GenreSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -17,11 +17,9 @@ class GenresSeeder extends Seeder
         Genre::create([
             'name' => 'Horror',
         ]);
-
         Genre::create([
             'name' => 'Drama',
         ]);
-
         Genre::create([
             'name' => 'Action',
         ]);
@@ -40,7 +38,6 @@ class GenresSeeder extends Seeder
         Genre::create([
             'name' => 'Western',
         ]);
-
         Genre::create([
             'name' => 'Adventure',
         ]);

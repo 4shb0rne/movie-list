@@ -20,7 +20,7 @@ class CreateShowsTable extends Migration
             $table->string('director');
             $table->timestamp('release_date');
             $table->longText('image_url');
-            $table->longText('bg_url');
+            $table->longText('background_url');
         });
     }
 
