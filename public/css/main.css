@@ -94,3 +94,11 @@ a:visited {
     margin-left: 0.1rem;
     margin-right: 0.1rem;
 }
+
+.carousel-item {
+    height: 32rem;
+}
+
+.carousel-item > img {
+    object-fit: cover;
+}
