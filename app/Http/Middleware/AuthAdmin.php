@@ -7,7 +7,7 @@ use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthorizeAdministrator
+class AuthAdmin
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,7 @@ class AuthorizeAdministrator
     {
         if (!Auth::user()) {
             throw new AuthorizationException();
-        } else if (!Auth::user()->isAdmin()) {
+        } else if (Auth::user()->role != 'admin') {
             throw new AuthorizationException();
         }
 

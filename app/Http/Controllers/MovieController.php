@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Actor;
 use App\Models\Cast;
-use App\Models\Category;
 use App\Models\Genre;
 use App\Models\Movie;
-use App\Models\Review;
-use App\Models\User;
+use App\Models\MovieActor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -188,7 +186,7 @@ class MovieController extends Controller
         $movie = Movie::create($attr);
 
         for ($i = 0; $i < count($characters); $i++) {
-            Cast::create(['character_name' => $characters[$i], 'show_id' => $movie->id, 'actor_id' => $actors[$i]]);
+            MovieActor::create(['character_name' => $characters[$i], 'show_id' => $movie->id, 'actor_id' => $actors[$i]]);
         }
 
         $movie->genres()->attach(request('genres'));
@@ -244,10 +242,10 @@ class MovieController extends Controller
         $actors = $request->actors;
         $movie->update($attr);
 
-        Cast::where('show_id', $movie->id)->delete();
+        MovieActor::where('show_id', $movie->id)->delete();
 
         for ($i = 0; $i < count($request->characters); $i++) {
-            Cast::create(['character_name' => $characters[$i], 'show_id' => $movie->id, 'actor_id' => $actors[$i]]);
+            MovieActor::create(['character_name' => $characters[$i], 'show_id' => $movie->id, 'actor_id' => $actors[$i]]);
         }
         $movie->genres()->sync(request('genres'));
 
@@ -261,7 +259,7 @@ class MovieController extends Controller
         Storage::delete('public/movies/thumbnail/' . $movie->image_url);
         Storage::delete('public/movies/bg-image/' . $movie->bg_url);
 
-        Cast::where('show_id', $movie->id)->delete();
+        MovieActor::where('show_id', $movie->id)->delete();
         $movie->genres()->detach();
         $movie->delete();
         return redirect('/')->with('success-info', 'Delete Movie Successfully');

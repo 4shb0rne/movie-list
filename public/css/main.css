@@ -1,0 +1,20 @@
+body {
+    margin: 0;
+}
+
+p {
+    color:white;
+}
+
+.nav-title {
+    color:red;
+    font-weight: bold;
+}
+
+.nav-title > span {
+    color:white;
+}
+
+.content {
+    margin: 0.3rem;
+}

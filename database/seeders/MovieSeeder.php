@@ -20,7 +20,7 @@ class MovieSeeder extends Seeder
             'director' => 'Jon Watts',
             'release_date' => date('2021-12-15'),
             'image_url' => 'spidermanthumbnail.jpg',
-            'bg_url' => 'spiderman-bg.jpg'
+            'background_url' => 'spiderman-bg.jpg'
         ]);
 
         Movie::create([
@@ -29,7 +29,7 @@ class MovieSeeder extends Seeder
             'director' => 'Byron Howard',
             'release_date' => date('2021-11-24'),
             'image_url' => 'encantothumbnail.jpg',
-            'bg_url' => 'encanto-bg.jpg'
+            'background_url' => 'encanto-bg.jpg'
         ]);
 
         Movie::create([
@@ -38,7 +38,7 @@ class MovieSeeder extends Seeder
             'director' => 'Lana Wachowsk',
             'release_date' => date('2021-12-16'),
             'image_url' => 'thematrix4thumbnail.jpg',
-            'bg_url' => 'matrix4-bg.jpg'
+            'background_url' => 'matrix4-bg.jpg'
         ]);
 
         Movie::create([
@@ -47,7 +47,7 @@ class MovieSeeder extends Seeder
             'director' => 'Andy Serkis',
             'release_date' => date('2021-09-30'),
             'image_url' => 'venomcarnagethumbnail.jpg',
-            'bg_url' => 'venomcarnage-bg.jpg'
+            'background_url' => 'venomcarnage-bg.jpg'
         ]);
 
         Movie::create([
@@ -56,7 +56,7 @@ class MovieSeeder extends Seeder
             'director' => 'Johannes Roberts',
             'release_date' => date('2021-11-24'),
             'image_url' => 'residentevilthumbnail.jpg',
-            'bg_url' => 'residentevil-bg.jpg'
+            'background_url' => 'residentevil-bg.jpg'
         ]);
 
         Movie::create([
@@ -65,7 +65,7 @@ class MovieSeeder extends Seeder
             'director' => 'Walt Becker',
             'release_date' => date('2021-11-10'),
             'image_url' => 'cliffordredthumbnail.jpg',
-            'bg_url' => 'cliffordred-bg.jpg'
+            'background_url' => 'cliffordred-bg.jpg'
         ]);
     }
 }

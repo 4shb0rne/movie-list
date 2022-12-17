@@ -7,5 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class MovieActor extends Model
 {
+    public $timestamps = false;
     use HasFactory;
+    protected $fillable = [
+        'movie_id',
+        'actor_id',
+        'character_name',
+    ];
 }

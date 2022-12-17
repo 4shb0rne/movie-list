@@ -1,4 +1,6 @@
-<?php:
+<?php
+
+namespace Database\Seeders;
 
 use App\Models\MovieGenre;
 use Illuminate\Database\Seeder;

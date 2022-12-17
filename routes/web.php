@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Middleware\AuthorizeAdministrator;
+use App\Http\Middleware\AuthAdmin;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +16,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MovieController::class, 'index'])->name('show-home');
+Route::get('/', function() {
+    return view('movies.home');
+});
+// Route::get('/', [MovieController::class, 'index'])->name('show-home');
 
 Route::prefix('/login')->group(function () {
     Route::get('/', [Auth\LoginController::class, 'index'])->name('show-login');
@@ -33,12 +36,12 @@ Route::prefix('/api/addWatchlist')->middleware('auth')->group(function () {
     Route::delete('/{movie}', [WatchListController::class, 'destroy'])->name('delete-watchlist');
 });
 
-Route::prefix('/movie')->middleware([AuthorizeAdministrator::class])->group(function () {
+Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
     Route::get('/create', [MovieController::class, 'create'])->name('create-movie');
     Route::post('/create', [MovieController::class, 'store'])->name('store-movie');
     Route::get('/edit/{movie}', [MovieController::class, 'edit'])->name('edit-movie');
     Route::put('/edit/{movie}', [MovieController::class, 'update'])->name("update-movie");
-    Route::get('/{movie}', [MovieController::class, 'show'])->name('show-movie')->withoutMiddleware([AuthorizeAdministrator::class]);
+    Route::get('/{movie}', [MovieController::class, 'show'])->name('show-movie')->withoutMiddleware([AuthAdmin::class]);
     Route::delete('/{movie}', [MovieController::class, 'destroy'])->name('delete-movie');
 });
 
@@ -52,13 +55,13 @@ Route::prefix('/watchlist')->middleware('auth')->group(function () {
     Route::post('/{movie}/{page}', [WatchListController::class, 'action'])->name('action-watchlist');
 });
 
-Route::prefix('/actor')->middleware([AuthorizeAdministrator::class])->group(function () {
-    Route::get('/', [ActorController::class, 'index'])->name('show-actor')->withoutMiddleware([AuthorizeAdministrator::class]);
+Route::prefix('/actor')->middleware([AuthAdmin::class])->group(function () {
+    Route::get('/', [ActorController::class, 'index'])->name('show-actor')->withoutMiddleware([AuthAdmin::class]);
     Route::get('/create', [ActorController::class, 'create'])->name('create-actor');
     Route::post('/create', [ActorController::class, 'store'])->name('store-actor');
     Route::get('/edit/{actor}', [ActorController::class, 'edit'])->name('edit-actor');
     Route::put('/edit/{actor}', [ActorController::class, 'update'])->name('update-actor');
-    Route::get("/{actor}", [ActorController::class, 'show'])->name('show-actor-detail')->withoutMiddleware([AuthorizeAdministrator::class]);
+    Route::get("/{actor}", [ActorController::class, 'show'])->name('show-actor-detail')->withoutMiddleware([AuthAdmin::class]);
     Route::delete('/{actor}', [ActorController::class, 'destroy'])->name('delete-actor');
 });
 
