@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg background-dark-accent navbar-dark">
     <div class="container-fluid">
-        <a class="navbar-brand nav-title" href="/">
+        <a class="navbar-brand title movie-list" href="/">
             Movie<span>List</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
