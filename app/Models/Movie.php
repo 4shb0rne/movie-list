@@ -17,4 +17,8 @@ class Movie extends Model
         'image_url',
         'background_url',
     ];
+
+    public function genres() {
+        return $this->belongsToMany(Genre::class, 'movie_genres', 'movie_id', 'genre_id');
+    }
 }

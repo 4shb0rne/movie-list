@@ -40,7 +40,6 @@ a:visited {
 }
 
 .content {
-    margin: 0.3rem;
     flex: 1;
 }
 
@@ -96,9 +95,49 @@ a:visited {
 }
 
 .carousel-item {
-    height: 32rem;
+    height: 34rem;
 }
 
-.carousel-item > img {
+.carousel-gradient > img {
+    /* display: block;
+    position: absolute;
+    top: 75%;
+    left: 50%;
+    min-height: 100%;
+    min-width: 100%;
+    transform: translate(-50%, -50%); */
+
     object-fit: cover;
+}
+
+
+.carousel-gradient {
+    position: relative;
+    display: block;
+}
+
+.carousel-gradient:after {
+    position: absolute;
+    content:"";
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    background: linear-gradient(to bottom left, rgba(255, 255, 255, 0) 0%,rgb(0, 0, 0) 100%);
+}
+
+/* .slide {
+    height: 648px;
+} */
+
+.carousel-inner {
+    height: 100%;
+}
+
+
+.carousel-caption {
+    right: 30%;
+    left: 2rem;
+    bottom: 25%;
+    text-align: left;
 }
