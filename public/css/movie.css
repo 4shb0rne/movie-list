@@ -1,0 +1,12 @@
+.movie-item-image {
+    max-height: 320px;
+}
+
+.card {
+    max-width: 240px;
+}
+
+.btn-pill:hover {
+    background-color: rgb(87, 86, 86);
+    transition: ease-in-out 0.3s;
+}

@@ -1,4 +1,9 @@
 @extends('layouts.template', ['title' => 'Home'])
+@section('header')
+    <script src="{{ asset('js/index.js') }}" defer></script>
+    <script src="{{ asset('js/lightslider.js') }}" defer></script>
+    <link rel="stylesheet" href="{{ asset('css/movie.css') }}">
+@endsection
 @section('content')
     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="false">
         <div class="carousel-indicators">
@@ -10,25 +15,27 @@
                 aria-label="Slide 3"></button>
         </div>
         <div class="carousel-inner">
-            @for ($i = 0; $i < count($randomMovies); $i+=1)
+            @for ($i = 0; $i < count($randomMovies); $i += 1)
                 @if ($i == 0)
                     <div class="carousel-item active">
                         <div class="carousel-gradient active">
-                            <img src="{{ asset('storage/movies/bg-image/'.$randomMovies[$i]->background_url) }}" class="d-block w-100" alt="...">
+                            <img src="{{ asset('storage/movies/bg-image/' . $randomMovies[$i]->background_url) }}"
+                                class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-caption d-none d-md-block">
-                            <h5>{{$randomMovies[$i]->title}}</h5>
-                            <p>{{$randomMovies[$i]->description}}</p>
+                            <h5>{{ $randomMovies[$i]->title }}</h5>
+                            <p>{{ $randomMovies[$i]->description }}</p>
                         </div>
                     </div>
                 @else
                     <div class="carousel-item">
                         <div class="carousel-gradient active">
-                            <img src="{{ asset('storage/movies/bg-image/'.$randomMovies[$i]->background_url) }}" class="d-block w-100" alt="...">
+                            <img src="{{ asset('storage/movies/bg-image/' . $randomMovies[$i]->background_url) }}"
+                                class="d-block w-100" alt="...">
                         </div>
                         <div class="carousel-caption d-none d-md-block">
-                            <h5>{{$randomMovies[$i]->title}}</h5>
-                            <p>{{$randomMovies[$i]->description}}</p>
+                            <h5>{{ $randomMovies[$i]->title }}</h5>
+                            <p>{{ $randomMovies[$i]->description }}</p>
                         </div>
                     </div>
                 @endif
@@ -42,5 +49,44 @@
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
             <span class="visually-hidden">Next</span>
         </button>
+    </div>
+    <div class="m-3">
+        <div class="d-flex flex-row align-items-center">
+            <i class="fa-solid fa-fire-flame-curved text-light me-2 fs-3"></i>
+            <span class="fs-3 m-0 fw-bold">Popular</span>
+        </div>
+        <ul class="movie-slider card-group list-unstyled cs-hidden" id="movieSlider">
+            @foreach ($trendingMovies as $tm)
+                <li class="card m-2 background-dark-accent">
+                    <img src="{{ asset('storage/movies/thumbnail/' . $tm->image_url) }}" class="card-img-top movie-item-image">
+                    <div class="card-body background-dark-accent justify-content-between d-flex flex-column">
+                        <h5 class="card-title">{{$tm->title}}</h5>
+                        <p class="card-text"><small class="text-muted">{{$tm->release_date->format('Y')}}</small></p>
+                    </div>
+                </li>
+            @endforeach
+        </ul>
+        <div class="my-2 container-fluid text-light">
+            <div class="d-flex flex-row align-items-center">
+                <i class="fa-solid fa-film me-2 fs-3"></i>
+                <span class="fs-3 m-0 fw-bold">Movies</span>
+            </div>
+            <hr class="dropdown-divider">
+            <div class="movie-genre w-100 position-relative px-2 mt-5">
+                <ul class="movie-genre-slider d-flex list-unstyled">
+                    @foreach ($genres as $genre)
+                        <li><button class="w-100 btn btn-pill br-32 background-dark-accent text-light" role="button">{{ $genre->name }}</button></li>
+                    @endforeach
+                </ul>
+            </div>
+            <div class="mt-2 row movie-sort">
+                <div class="col d-flex align-items-center">
+                    <span>Sort By:</span>
+                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light">Latest</button>
+                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light">A-Z</button>
+                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light">Z-A</button>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

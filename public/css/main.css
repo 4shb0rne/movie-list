@@ -141,3 +141,7 @@ a:visited {
     bottom: 25%;
     text-align: left;
 }
+
+.br-32 {
+    border-radius: 32px;
+}
