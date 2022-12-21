@@ -67,9 +67,14 @@
             @endforeach
         </ul>
         <div class="my-2 container-fluid text-light">
-            <div class="d-flex flex-row align-items-center">
-                <i class="fa-solid fa-film me-2 fs-3"></i>
-                <span class="fs-3 m-0 fw-bold">Movies</span>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <div class="d-flex flex-row align-items-center">
+                    <i class="fa-solid fa-film me-2 fs-3"></i>
+                    <span class="fs-3 m-0 fw-bold">Movies</span>
+                </div>
+                <div>
+                    <input type="text" class="movie-search p-3 text-light" id="search-movie" placeholder="Search movie...">
+                </div>
             </div>
             <hr class="dropdown-divider">
             <div class="movie-genre w-100 position-relative px-2 mt-5">
@@ -97,44 +102,4 @@
         </div>
     </div>
     <div hidden id="pager">{{$pages}}</div>
-    <script type="text/javascript">
-        // const genreButtons = document.querySelectorAll('.genre-selector');
-        // let activeButton = false;
-        // let activeButtonIndex = -1;
-
-        // const sortButtons = document.querySelectorAll('.sort-selector');
-        // let activeButtonSort = false;
-        // let activeButtonSortIndex = -1;
-
-        // var page = 1;
-        // $(window).scroll(function() {
-        //     if ($(window).scrollTop() + $(window).height() + 1 >= $(document).height() &&
-        //         {{ $pages }} > page && activeButton == false && activeButtonSort == false) {
-        //         page++;
-        //         loadMoreData(page);
-        //     }
-        // });
-
-        // function loadMoreData(page) {
-        //     $.ajax({
-        //             url: '?page=' + page,
-        //             type: "get",
-        //             beforeSend: function() {
-        //                 $('.ajax-load').show();
-        //             }
-        //         })
-        //         .done(function(data) {
-        //             if (data.html == " ") {
-        //                 $('.ajax-load').html("No more records found");
-        //                 return;
-        //             }
-        //             $('.ajax-load').hide();
-        //             $("#movie-section-container").append(data.html);
-        //             loadAddMovieButton();
-        //         })
-        //         .fail(function(jqXHR, ajaxOptions, thrownError) {
-        //             alert('server not responding...');
-        //         });
-        // }
-    </script>
 @endsection

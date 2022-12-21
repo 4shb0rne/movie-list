@@ -14,3 +14,9 @@
 .btn-active {
     background-color: #E50914;
 }
+
+.movie-search {
+    background-color: rgb(50, 50, 50);
+    border: 0;
+    border-radius: 32px;
+}

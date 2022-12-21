@@ -4,37 +4,29 @@ $(document).ready(function() {
     const pages = document.getElementById('pager').textContent;
     var activeGenre
     var activeSort
+    var searchQuery = ""
     var currPage = 1;
 
     const genreList = document.querySelectorAll('.genre-selector')
     const sortList = document.querySelectorAll('.sort-selector')
-
+    const search = $('#search-movie')
     // console.log(genreList)
     $(window).scroll(function () {
-        const currScroll = $(window).scrollTop() + $(window).height();
+        const currScroll = $(window).scrollTop() + $(window).height() + 1;
         if (currScroll >= $(document).height() && pages > currPage && !activeGenre && !activeSort) {
             currPage++
-            loadMoreData(currPage)
+            loadMovies(currPage)
         }
 
     });
-    function loadMoreData(page) {
-        console.log(page)
-        $.ajax({
-                url: "?page="+page,
-                type: "get",
-            })
-            .done(function(data) {
-                // console.log(data.html)
-                if (data.html == " " || !data.html) {
-                    return;
-                }
-                movieList.append(data.html);
-            })
-            .fail(function(jqXHR, ajaxOptions, thrownError) {
-                alert(thrownError)
-            });
-    }
+
+    search.keyup(function (e) {
+        if(e.keyCode == 13) {
+            searchQuery = $(this).val();
+            movieList.empty()
+            loadMovieQuery()
+        }
+    });
 
     genreList.forEach((genreBtn) => {
         genreBtn.addEventListener('click', (e) => {
@@ -42,15 +34,14 @@ $(document).ready(function() {
             if (genreBtn.classList.contains('btn-active')) {
                 genreBtn.classList.remove('btn-active')
                 activeGenre = undefined
-                movieList.empty()
-                currPage = 1;
-                loadMoreData(currPage)
+                emptyMovieList()
             } else {
                 if (activeGenre) {
                     activeGenre.classList.remove('btn-active');
                 }
                 genreBtn.classList.add('btn-active')
                 activeGenre = genreBtn;
+                loadMovieQuery()
             }
         })
     });
@@ -62,16 +53,74 @@ $(document).ready(function() {
             if (sortBtn.classList.contains('btn-active')) {
                 sortBtn.classList.remove('btn-active')
                 activeSort = undefined
+                emptyMovieList()
             } else {
                 if (activeSort) {
                     activeSort.classList.remove('btn-active');
                 }
                 sortBtn.classList.add('btn-active')
                 activeSort = sortBtn;
+                loadMovieQuery()
             }
         })
     });
+
+    function loadMovies(page) {
+        console.log(page)
+        $.ajax({
+                url: "?page="+page,
+                type: "get",
+            })
+            .done(function(data) {
+                if (data.html == " " || !data.html) {
+                    return;
+                }
+                movieList.append(data.html);
+            })
+            .fail(function(jqXHR, ajaxOptions, thrownError) {
+                console.log(jqXHR)
+                console.log(ajaxOptions)
+                alert(thrownError)
+            });
+    }
+
+
+    function loadMovieQuery() {
+        const sort = (!activeSort ? "NULL" : activeSort.textContent).trim()
+        const genre = (!activeGenre ? "NULL" : activeGenre.textContent).trim()
+        const search = (!searchQuery ? "" : searchQuery).trim() == "" ? "NULL" : searchQuery.trim()
+        if (sort == "NULL" && genre == "NULL" && search == "NULL") {
+            currPage = 1;
+            loadMovies(currPage);
+            return;
+        }
+        console.log("sort="+sort+'&genre='+genre+'&search='+search)
+        $.ajax({
+            url: "?sort="+sort+'&genre='+genre+'&search='+search,
+            type: "get",
+        })
+        .done(function(data) {
+            // console.log(data.html)
+            if (data.html == " " || !data.html) {
+                return;
+            }
+            movieList.empty()
+            movieList.append(data.html)
+        })
+        .fail(function(jqXHR, ajaxOptions, thrownError) {
+            console.log(jqXHR)
+            console.log(ajaxOptions)
+            alert(thrownError)
+        });
+    }
+
+    function emptyMovieList() {
+        movieList.empty()
+        currPage = 1;
+        loadMovies(currPage)
+    }
 });
+
 
 function setUpSliders() {
     const property = {

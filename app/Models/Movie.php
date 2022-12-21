@@ -22,4 +22,9 @@ class Movie extends Model
     public function genres() {
         return $this->belongsToMany(Genre::class, 'movie_genres', 'movie_id', 'genre_id');
     }
+
+    public function actors()
+    {
+        return $this->belongsToMany(Actor::class, 'movie_actors', 'movie_id', 'actor_id')->withPivot('actor_id', 'character_name');
+    }
 }
