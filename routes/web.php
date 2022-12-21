@@ -16,7 +16,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [MovieController::class, 'index']);
+Route::get('/', [MovieController::class, 'index'])->name('home');
+Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
+    Route::get('/create', [MovieController::class, 'create'])->name('create-movie');
+    Route::post('/create', [MovieController::class, 'store'])->name('store-movie');
+    Route::get('/edit/{movie}', [MovieController::class, 'edit'])->name('edit-movie');
+    Route::put('/edit/{movie}', [MovieController::class, 'update'])->name("update-movie");
+    Route::get('/{movie}', [MovieController::class, 'show'])->name('movie-data')->withoutMiddleware([AuthAdmin::class]);
+    Route::delete('/{movie}', [MovieController::class, 'destroy'])->name('delete-movie');
+});
 
 // Route::prefix('/login')->group(function () {
 //     Route::get('/', [Auth\LoginController::class, 'index'])->name('show-login');
@@ -33,14 +41,6 @@ Route::get('/', [MovieController::class, 'index']);
 //     Route::delete('/{movie}', [WatchListController::class, 'destroy'])->name('delete-watchlist');
 // });
 
-// Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
-//     Route::get('/create', [MovieController::class, 'create'])->name('create-movie');
-//     Route::post('/create', [MovieController::class, 'store'])->name('store-movie');
-//     Route::get('/edit/{movie}', [MovieController::class, 'edit'])->name('edit-movie');
-//     Route::put('/edit/{movie}', [MovieController::class, 'update'])->name("update-movie");
-//     Route::get('/{movie}', [MovieController::class, 'show'])->name('show-movie')->withoutMiddleware([AuthAdmin::class]);
-//     Route::delete('/{movie}', [MovieController::class, 'destroy'])->name('delete-movie');
-// });
 
 // Route::prefix('/profile')->middleware('auth')->group(function () {
 //     Route::get('/', [UserController::class, 'index'])->name('show-profile');

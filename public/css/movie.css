@@ -10,3 +10,7 @@
     background-color: rgb(87, 86, 86);
     transition: ease-in-out 0.3s;
 }
+
+.btn-active {
+    background-color: #E50914;
+}

@@ -1,6 +1,6 @@
 @extends('layouts.template', ['title' => 'Home'])
 @section('header')
-    <script src="{{ asset('js/index.js') }}" defer></script>
+    <script src="{{ asset('js/index.js') }}" type="text/javascript" defer></script>
     <script src="{{ asset('js/lightslider.js') }}" defer></script>
     <link rel="stylesheet" href="{{ asset('css/movie.css') }}">
 @endsection
@@ -75,18 +75,66 @@
             <div class="movie-genre w-100 position-relative px-2 mt-5">
                 <ul class="movie-genre-slider d-flex list-unstyled">
                     @foreach ($genres as $genre)
-                        <li><button class="w-100 btn btn-pill br-32 background-dark-accent text-light" role="button">{{ $genre->name }}</button></li>
+                        <li>
+                            <button class="w-100 btn btn-pill br-32 background-dark-accent text-light genre-selector" role="button">
+                                {{ $genre->name }}
+                            </button>
+                        </li>
                     @endforeach
                 </ul>
             </div>
             <div class="mt-2 row movie-sort">
                 <div class="col d-flex align-items-center">
                     <span>Sort By:</span>
-                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light">Latest</button>
-                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light">A-Z</button>
-                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light">Z-A</button>
+                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">Latest</button>
+                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">A-Z</button>
+                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">Z-A</button>
                 </div>
             </div>
         </div>
+        <div class="row mt-3 m-1 justify-content-center" id="movie-list-container">
+            @include('movies.card')
+        </div>
     </div>
+    <div hidden id="pager">{{$pages}}</div>
+    <script type="text/javascript">
+        // const genreButtons = document.querySelectorAll('.genre-selector');
+        // let activeButton = false;
+        // let activeButtonIndex = -1;
+
+        // const sortButtons = document.querySelectorAll('.sort-selector');
+        // let activeButtonSort = false;
+        // let activeButtonSortIndex = -1;
+
+        // var page = 1;
+        // $(window).scroll(function() {
+        //     if ($(window).scrollTop() + $(window).height() + 1 >= $(document).height() &&
+        //         {{ $pages }} > page && activeButton == false && activeButtonSort == false) {
+        //         page++;
+        //         loadMoreData(page);
+        //     }
+        // });
+
+        // function loadMoreData(page) {
+        //     $.ajax({
+        //             url: '?page=' + page,
+        //             type: "get",
+        //             beforeSend: function() {
+        //                 $('.ajax-load').show();
+        //             }
+        //         })
+        //         .done(function(data) {
+        //             if (data.html == " ") {
+        //                 $('.ajax-load').html("No more records found");
+        //                 return;
+        //             }
+        //             $('.ajax-load').hide();
+        //             $("#movie-section-container").append(data.html);
+        //             loadAddMovieButton();
+        //         })
+        //         .fail(function(jqXHR, ajaxOptions, thrownError) {
+        //             alert('server not responding...');
+        //         });
+        // }
+    </script>
 @endsection
