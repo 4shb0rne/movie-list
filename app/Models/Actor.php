@@ -21,11 +21,11 @@ class Actor extends Model
     public $timestamps = false;
 
     public function movies() {
-        return $this->belongsToMany(Movie::class, 'movie_actors', 'actor_id', 'movie_id');
+        return $this->belongsToMany(Movie::class, 'movie_actors', 'actor_id', 'movie_id')->withPivot('actor_id', 'character_name');
     }
 
     public function getCharacterNameAttribute() {
-        $movie_actor = MovieActor::where('movie_id', '=', $this->movie_id)->where('actor_id','=',$this->id);
+        $movie_actor = MovieActor::where('movie_id', '=', $this->movie_id)->where('actor_id','=',$this->id)->first();
         return $movie_actor->character_name;
     }
 

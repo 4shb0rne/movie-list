@@ -86,15 +86,14 @@ $(document).ready(function() {
 
 
     function loadMovieQuery() {
-        const sort = (!activeSort ? "NULL" : activeSort.textContent).trim()
-        const genre = (!activeGenre ? "NULL" : activeGenre.textContent).trim()
-        const search = (!searchQuery ? "" : searchQuery).trim() == "" ? "NULL" : searchQuery.trim()
-        if (sort == "NULL" && genre == "NULL" && search == "NULL") {
+        const sort = (!activeSort ? "-1" : activeSort.textContent.trim())
+        const genre = (!activeGenre ? "-1" : activeGenre.textContent.trim())
+        const search = (!searchQuery || searchQuery == "" ? "-1" : searchQuery.trim())
+        if (sort == "-1" && genre == "-1" && search == "-1") {
             currPage = 1;
             loadMovies(currPage);
             return;
         }
-        console.log("sort="+sort+'&genre='+genre+'&search='+search)
         $.ajax({
             url: "?sort="+sort+'&genre='+genre+'&search='+search,
             type: "get",

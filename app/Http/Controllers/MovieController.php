@@ -16,6 +16,7 @@ class MovieController extends Controller
 
     public function index(Request $request) {
         $movies = Movie::paginate(5);
+
         $trendingMovies = Movie::get();
         $trendingMovies = $trendingMovies->sortBy(function ($trendSort) {
             return $trendSort->count;
@@ -31,14 +32,13 @@ class MovieController extends Controller
             $view = view('movies.card', compact('movies'))->render();
             return response()->json(['html' => $view]);
 
-        } else if ($request->ajax() && $request->genre && $request->sort && $request->search) {
+        } else if ($request->ajax()) {
             $genre = $request->genre;
             $sort = $request->sort;
             $search = $request->search;
-
             $movies = Movie::select('*');
 
-            if ($genre != "NULL") {
+            if ($genre != "-1") {
                 $filtered = Movie::join('movie_genres', 'movies.id', '=', 'movie_genres.movie_id')
                             ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
                             ->where('genres.name', $genre);
@@ -46,7 +46,7 @@ class MovieController extends Controller
                 $filtered = $movies;
             }
 
-            if ($sort != "NULL" ) {
+            if ($sort != "-1" ) {
                 $indicator = "";
                 $order = "asc";
                 if ($sort == "Latest") {
@@ -64,7 +64,7 @@ class MovieController extends Controller
                 $sorted = $filtered;
             }
 
-            if ($search != "NULL") {
+            if ($search != "-1") {
                 $searchedMovies = $sorted->where('movies.title', 'LIKE', '%' . $request->search . '%');
             } else {
                 $searchedMovies = $sorted;
