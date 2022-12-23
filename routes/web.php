@@ -26,15 +26,15 @@ Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
     Route::delete('/{movie}', [MovieController::class, 'destroy'])->name('delete-movie');
 });
 
-// Route::prefix('/login')->group(function () {
-//     Route::get('/', [Auth\LoginController::class, 'index'])->name('show-login');
-//     Route::post('/', [Auth\LoginController::class, 'login'])->name('login');
-// });
+Route::prefix('/login')->group(function () {
+    Route::get('/', [AuthController::class, 'loginView'])->name('login');
+    Route::post('/', [AuthController::class, 'loginAuth'])->name('validate-login');
+});
 
-// Route::prefix('/register')->group(function () {
-//     Route::get('/', [Auth\RegisterController::class, 'index'])->name('show-register');
-//     Route::post('/', [Auth\RegisterController::class, 'register'])->name('register');
-// });
+Route::prefix('/register')->group(function () {
+    Route::get('/', [AuthController::class, 'register'])->name('register');
+    Route::post('/', [AuthController::class, 'registerAuth'])->name('validate-register');
+});
 
 // Route::prefix('/api/addWatchlist')->middleware('auth')->group(function () {
 //     Route::post('/{movie}', [WatchListController::class, 'store'])->name('store-watchlist');
