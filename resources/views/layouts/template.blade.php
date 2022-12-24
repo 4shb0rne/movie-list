@@ -15,7 +15,7 @@
     @yield('header')
 </head>
 
-<body class="bg-dark">
+<body style="background: rgb(22, 22, 22)">
     <x-navbar/>
     <div class="content">
         @yield('content')

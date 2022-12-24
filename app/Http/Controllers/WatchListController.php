@@ -68,7 +68,7 @@ class WatchListController extends Controller
 
     public function destroy(Movie $movie)
     {
-        $this->authorize('actionWatchList', $movie);
+        $this->authorize('updateWatchList', $movie);
 
         $user = Auth::user();
         $watchlist = Watchlist::where('user_id', $user->id)->where('show_id', $movie->id)->delete();
@@ -76,7 +76,7 @@ class WatchListController extends Controller
 
     public function action(Request $request, Movie $movie)
     {
-        $this->authorize('actionWatchList', $movie);
+        $this->authorize('updateWatchList', $movie);
         $user = Auth::user();
         if ($request->status == 'planning' || $request->status == 'finished' || $request->status == 'watching') {
             DB::table('watchlists')->where('user_id', $user->id)->where('show_id', $movie->id)->update([

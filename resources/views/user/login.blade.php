@@ -1,6 +1,6 @@
 @extends('layouts.template', ['title' => 'Login'])
 @section('header')
-    <link rel="stylesheet" href="{{ asset('css/auth.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
 @endsection
 @section('content')
 <div class="mb-5">

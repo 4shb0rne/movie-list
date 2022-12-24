@@ -18,8 +18,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [MovieController::class, 'index'])->name('home');
 Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
-    Route::get('/create', [MovieController::class, 'create'])->name('create-movie');
-    Route::post('/create', [MovieController::class, 'store'])->name('store-movie');
+    Route::get('/add', [MovieController::class, 'create'])->name('create-movie');
+    Route::post('/add', [MovieController::class, 'validateCreate'])->name('validate-create-movie');
     Route::get('/edit/{movie}', [MovieController::class, 'edit'])->name('edit-movie');
     Route::put('/edit/{movie}', [MovieController::class, 'update'])->name("update-movie");
     Route::get('/{movie}', [MovieController::class, 'show'])->name('movie-data')->withoutMiddleware([AuthAdmin::class]);

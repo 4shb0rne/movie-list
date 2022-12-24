@@ -74,96 +74,6 @@ class MovieController extends Controller
             $view = view('movies.card', ['movies' => $searchedMovies->get()])->render();
             return response()->json(['html' => $view]);
         }
-        // else if ($request->ajax() && $request->genre && !$request->sort) {
-        //     if ($request->search == '') {
-        //         $moviesGenres = Movie::join('movie_genres', 'movies.id', '=', 'movie_genres.movie_id')
-        //             ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
-        //             ->where('genres.name', $request->genre)->get();
-        //         foreach($moviesGenres as $movieGenre){
-        //             $movieGenre->id = $movieGenre->movie_id;
-        //         }
-        //         $view = view('movies.card', ['movies' => $moviesGenres])->render();
-        //         return response()->json(['html' => $view]);
-        //     } else {
-        //         $movies = Movie::all();
-        //         $moviesGenres = Movie::join('movie_genres', 'movies.id', '=', 'movie_genres.movie_id')
-        //             ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
-        //             ->where('genres.name', $request->genre)
-        //             ->where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
-        //         $view = view('movies.card', ['movies' => $moviesGenres])->render();
-        //         foreach($moviesGenres as $movieGenre){
-        //             $movieGenre->id = $movieGenre->movie_id;
-        //         }
-        //         return response()->json(['html' => $view]);
-        //     }
-        // } else if ($request->ajax() && !$request->genre && $request->sort) {
-        //     if ($request->search == '') {
-        //         $moviesSort = '';
-        //         if ($request->sort == 'Latest') {
-        //             $moviesSort = Movie::latest('release_date')->get();
-        //         } else if ($request->sort == 'A-Z') {
-        //             $moviesSort = Movie::select('*')->orderBy('title')->get();
-        //         } else if ($request->sort == 'Z-A') {
-        //             $moviesSort = Movie::select('*')->orderBy('title', 'desc')->get();
-        //         }
-        //         $view = view('movies.card', ['movies' => $moviesSort])->render();
-        //         return response()->json(['html' => $view]);
-        //     } else {
-        //         $moviesSort = '';
-        //         if ($request->sort == 'Latest') {
-        //             $moviesSort = Movie::latest('release_date')
-        //                 ->where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
-        //         } else if ($request->sort == 'A-Z') {
-        //             $moviesSort = Movie::select('*')->orderBy('title')
-        //                 ->where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
-        //         } else if ($request->sort == 'Z-A') {
-        //             $moviesSort = Movie::select('*')->orderBy('title', 'desc')
-        //                 ->where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
-        //         }
-        //         $view = view('movies.card', ['movies' => $moviesSort])->render();
-        //         return response()->json(['html' => $view]);
-        //     }
-        // } else if ($request->ajax() && $request->genre && $request->sort) {
-        //     if ($request->search == '') {
-        //         $moviesMix = Movie::join('movie_genres', 'movies.id', '=', 'movie_genres.movie_id')
-        //             ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
-        //             ->where('genres.name', $request->genre);
-        //         if ($request->sort == 'Latest') {
-        //             $moviesMix = $moviesMix->orderBy('release_date', 'desc')->get();
-        //         } else if ($request->sort == 'A-Z') {
-        //             $moviesMix = $moviesMix->orderBy('title')->get();
-        //         } else if ($request->sort == 'Z-A') {
-        //             $moviesMix = $moviesMix->orderBy('title', 'desc')->get();
-        //         }
-        //         $view = view('movies.card', ['movies' => $moviesMix])->render();
-        //         return response()->json(['html' => $view]);
-        //     } else {
-        //         $moviesMix = Movie::join('movie_genres', 'movies.id', '=', 'movie_genres.movie_id')
-        //             ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
-        //             ->where('genres.name', $request->genre)
-        //             ->where('movies.title', 'LIKE', '%' . $request->search . '%');
-        //         if ($request->sort == 'Latest') {
-        //             $moviesMix = $moviesMix->orderBy('release_date', 'desc')->get();
-        //         } else if ($request->sort == 'A-Z') {
-        //             $moviesMix = $moviesMix->orderBy('title')->get();
-        //         } else if ($request->sort == 'Z-A') {
-        //             $moviesMix = $moviesMix->orderBy('title', 'desc')->get();
-        //         }
-        //         $view = view('movies.card', ['movies' => $moviesMix])->render();
-        //         return response()->json(['html' => $view]);
-        //     }
-        // } else if ($request->ajax() && !$request->genre && !$request->sort) {
-        //     if ($request->search == '') {
-        //         $moviesGenres = Movie::get();
-        //         $view = view('movies.card', ['movies' => $moviesGenres])->render();
-        //         return response()->json(['html' => $view]);
-        //     } else {
-        //         $moviesGenres = Movie::where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
-        //         $view = view('movies.card', ['movies' => $moviesGenres])->render();
-        //         return response()->json(['html' => $view]);
-        //     }
-        // }
-
         return view('movies.home', compact('movies', 'trendingMovies', 'genres', 'randomMovies', 'pages'));
     }
 
@@ -187,16 +97,15 @@ class MovieController extends Controller
 
     public function create()
     {
-        $this->authorize('addMovie');
-        $movie = new Movie();
-        $genres = Genre::get();
-        $actors = Actor::get();
-        return view('movies.create', compact('movie', 'genres', 'actors'));
+        $this->authorize('createMovie');
+        $genres = Genre::all();
+        $actors = Actor::all();
+        return view('movies.add', compact('genres', 'actors'));
     }
 
-    public function store(Request $request)
+    public function validateCreate(Request $request)
     {
-        $this->authorize('addMovie');
+        $this->authorize('createMovie');
 
         $attr = $request->validate([
             'title' => 'required|min:2|max:50',

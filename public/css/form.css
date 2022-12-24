@@ -1,0 +1,33 @@
+.form {
+    min-width: 50%;
+    margin-top: 5rem;
+
+}
+
+.form input, .form textarea, .form select {
+    background-color: rgb(50, 50, 50);
+    border: none;
+    color: white;
+}
+
+.form input:focus,.form input:checked, .form textarea:focus{
+    background-color: rgb(50, 50, 50);
+    color: white;
+}
+
+.btn-auth {
+    background-color: #E50914;
+    color: white;
+}
+
+.btn-auth:hover {
+    background-color: #a7040c;
+    transition: ease-in-out 0.3s;
+    box-shadow: 1px 1px 2px 1px #ff656d96;
+}
+
+.text-area {
+    resize: none;
+    overflow: auto;
+    height: 100px !important;
+}
