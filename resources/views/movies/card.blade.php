@@ -1,13 +1,14 @@
 @forelse ($movies as $movie)
     <div class="col-xl-2 col-5 me-5">
-        <a href="{{ route('movie-data', $movie->id) }}"><img
-                src="{{ asset('storage/movies/thumbnail/' . $movie->image_url) }}" class="movie-image" alt="..."></a>
+        <a href="{{ route('movie-data', $movie->id) }}">
+            <img src="{{ asset('storage/movies/thumbnail/' . $movie->image_url) }}" class="movie-image" alt="...">
+        </a>
         <div class="fs-5 py-2">{{ Str::limit($movie->title, 20) }}</div>
         <div class="d-flex justify-content-between">
             <p class="text-muted">{{ $movie->release_date->format('Y') }}</p>
-            {{-- <p class="card-info">
+            <p class="card-info">
                 @auth
-                    @if (!auth()->user()->isAdmin)
+                    @if (!auth()->user()->isAdmin())
                         @can('addWatchList', $movie)
                             <button class="btn p-0" id="addWatchButton" value="{{ $movie->id }}">
                                 <i class="fas fa-plus text-muted"></i>
@@ -19,7 +20,7 @@
                         @endcan
                     @endif
                 @endauth
-            </p> --}}
+            </p>
         </div>
     </div>
 @empty
