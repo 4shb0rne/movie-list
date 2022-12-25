@@ -108,41 +108,40 @@ class MovieController extends Controller
         $this->authorize('createMovie');
 
         $attr = $request->validate([
-            'title' => 'required|min:2|max:50',
+            'title' => 'required|min:2|max:50|unique:movies',
             'description' => 'required|min:8',
             'genres' => 'array|required',
             'actors' => 'array|required',
             'characters' => 'array|required',
             'director' => 'required|min:3',
-            'release_date' => 'required',
-            'image_url' => 'required',
-            'bg_url' => 'required'
+            'date' => 'required',
+            'image' => 'required|mimes:jpg,jpeg,png,gif',
+            'background' => 'required|mimes:jpg,jpeg,png,gif'
         ]);
 
-        if ($request->file('image_url')) {
-            $file = $request->file('image_url');
+        if ($request->file('image')) {
+            $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('storage/movies/thumbnail'), $filename);
             $attr['image_url'] = $filename;
         }
 
-        if ($request->file('bg_url')) {
-            $file = $request->file('bg_url');
+        if ($request->file('background')) {
+            $file = $request->file('background');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('storage/movies/bg-image'), $filename);
-            $attr['bg_url'] = $filename;
+            $attr['background_url'] = $filename;
         }
 
         $characters = $request->characters;
         $actors = $request->actors;
         $movie = Movie::create($attr);
-
         for ($i = 0; $i < count($characters); $i++) {
             MovieActor::create(['character_name' => $characters[$i], 'movie_id' => $movie->id, 'actor_id' => $actors[$i]]);
         }
 
         $movie->genres()->attach(request('genres'));
-        return redirect('/')->with('success-info', 'Add Movie Successfully');
+        return redirect('/');
     }
 
     public function edit(Movie $movie)

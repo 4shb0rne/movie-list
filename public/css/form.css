@@ -1,16 +1,16 @@
 .form {
     min-width: 50%;
-    margin-top: 5rem;
+    margin-top: 3rem;
 
 }
 
-.form input, .form textarea, .form select {
+.form-input {
     background-color: rgb(50, 50, 50);
     border: none;
     color: white;
 }
 
-.form input:focus,.form input:checked, .form textarea:focus{
+.form-input:focus {
     background-color: rgb(50, 50, 50);
     color: white;
 }
