@@ -25,3 +25,55 @@
     height: 275px;
     object-fit: cover;
 }
+
+.movie-detail-background {
+    height: 480px;
+    display: flex;
+    justify-content: center;
+    padding: 1.25rem;
+}
+
+.movie-detail-image {
+    width: 240px;
+    object-fit: cover;
+}
+
+.movie-detail {
+    width: 100%;
+    padding-left: 5rem;
+}
+
+.genre-pill {
+    background-color: rgba(81, 78, 78, 0.4);
+    border: 1px solid black;
+    border-radius: 24px;
+    padding: 0.5rem 0.75rem;
+    margin-right: 0.25rem;
+}
+
+.genre-pill:hover {
+    background-color: rgba(10, 10, 10, 0.75);
+    transition: ease-in-out 0.4s;
+    color: #E50914;
+}
+
+.text-gray {
+    color:rgb(154, 153, 153)
+}
+
+.content-container {
+    width: 100%;
+    padding-left: 5rem;
+    padding-top: 1.25rem;
+}
+
+.actor-image {
+    object-fit: cover;
+    height: 320px;
+}
+
+.card {
+    border: none !important;
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+}

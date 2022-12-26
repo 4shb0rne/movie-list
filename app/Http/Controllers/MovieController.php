@@ -78,21 +78,23 @@ class MovieController extends Controller
     }
 
 
-    public function movie(Movie $movie)
+    public function detail($id)
     {
         $genres = DB::table('movie_genres')
             ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
-            ->where('movie_id', $movie->id)->get();
-
+            ->where('movie_id', $id)
+            ->get();
 
         $actors = DB::table('movies')
             ->join('movie_actors', 'movies.id', '=', 'movie_actors.movie_id')
             ->join('actors', 'movie_actors.actor_id', '=', 'actors.id')
-            ->where('movies.id', $movie->id)->get();
-        $movies = Movie::get();
+            ->where('movies.id', $id)
+            ->get();
 
+        $more = DB::table('movies')->where('movies.id','<>',$id)->get();
 
-        return view('movies.detail', compact('movie', 'actors', 'genres', 'movies'));
+        $movie = Movie::where('id',$id)->first();
+        return view('movies.detail', compact('movie', 'actors', 'genres', 'more'));
     }
 
     public function create()

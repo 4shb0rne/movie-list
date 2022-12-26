@@ -1,6 +1,6 @@
 @forelse ($movies as $movie)
     <div class="col-xl-2 col-5 me-5">
-        <a href="{{ route('movie-data', $movie->id) }}">
+        <a href="{{ route('movie-detail', $movie->id) }}">
             <img src="{{ asset('storage/movies/thumbnail/' . $movie->image_url) }}" class="movie-image" alt="...">
         </a>
         <div class="fs-5 py-2">{{ Str::limit($movie->title, 20) }}</div>

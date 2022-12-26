@@ -22,7 +22,7 @@ Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
     Route::post('/add', [MovieController::class, 'validateCreate'])->name('validate-create-movie');
     Route::get('/edit/{movie}', [MovieController::class, 'edit'])->name('edit-movie');
     Route::put('/edit/{movie}', [MovieController::class, 'update'])->name("update-movie");
-    Route::get('/{movie}', [MovieController::class, 'show'])->name('movie-data')->withoutMiddleware([AuthAdmin::class]);
+    Route::get('/detail/{id}', [MovieController::class, 'detail'])->name('movie-detail')->withoutMiddleware([AuthAdmin::class]);
     Route::delete('/{movie}', [MovieController::class, 'destroy'])->name('delete-movie');
 });
 
