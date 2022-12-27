@@ -58,7 +58,7 @@
         <ul class="movie-slider card-group list-unstyled cs-hidden" id="movieSlider">
             @foreach ($trendingMovies as $tm)
                 <a href="{{ route('movie-detail', ['id'=>$tm->id]) }}">
-                    <li class="card m-2 background-dark-accent">
+                    <li class="card m-2 background-dark-accent card-slider">
                         <img src="{{ asset('storage/movies/thumbnail/' . $tm->image_url) }}" class="card-img-top movie-item-image">
                         <div class="card-body background-dark-accent justify-content-between d-flex flex-column">
                             <h5 class="card-title">{{$tm->title}}</h5>

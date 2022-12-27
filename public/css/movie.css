@@ -1,9 +1,17 @@
 .movie-item-image {
+    height: 320px;
     max-height: 320px;
+    object-fit: cover;
 }
 
 .card {
     max-width: 240px;
+    height: 460px;
+}
+
+.card-title {
+    margin: 0;
+    padding: 0;
 }
 
 .btn-pill:hover {
@@ -23,6 +31,7 @@
 
 .movie-image {
     height: 275px;
+    width: 170px;
     object-fit: cover;
 }
 

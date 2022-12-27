@@ -208,10 +208,10 @@ class MovieController extends Controller
         return redirect('/movie/detail/' . $movie->id);
     }
 
-    public function destroy(Movie $movie)
+    public function delete($id)
     {
         $this->authorize('editMovie');
-
+        $movie = Movie::find($id);
         Storage::delete('public/movies/thumbnail/' . $movie->image_url);
         Storage::delete('public/movies/bg-image/' . $movie->bg_url);
 
