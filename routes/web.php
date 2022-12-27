@@ -20,8 +20,8 @@ Route::get('/', [MovieController::class, 'index'])->name('home');
 Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
     Route::get('/add', [MovieController::class, 'create'])->name('create-movie');
     Route::post('/add', [MovieController::class, 'validateCreate'])->name('validate-create-movie');
-    Route::get('/edit/{movie}', [MovieController::class, 'edit'])->name('edit-movie');
-    Route::put('/edit/{movie}', [MovieController::class, 'update'])->name("update-movie");
+    Route::get('/edit/{id}', [MovieController::class, 'edit'])->name('edit-movie');
+    Route::put('/edit/{id}', [MovieController::class, 'validateEdit'])->name("validate-edit-movie");
     Route::get('/detail/{id}', [MovieController::class, 'detail'])->name('movie-detail')->withoutMiddleware([AuthAdmin::class]);
     Route::delete('/{movie}', [MovieController::class, 'destroy'])->name('delete-movie');
 });

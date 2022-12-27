@@ -70,7 +70,6 @@ class MovieController extends Controller
                 $searchedMovies = $sorted;
             }
 
-
             $view = view('movies.card', ['movies' => $searchedMovies->get()])->render();
             return response()->json(['html' => $view]);
         }
@@ -146,49 +145,51 @@ class MovieController extends Controller
         return redirect('/');
     }
 
-    public function edit(Movie $movie)
+    public function edit($id)
     {
         $this->authorize('editMovie');
 
         $genres = Genre::get();
         $actors = Actor::get();
+        $movie = Movie::find($id);
+        // dd($movie->actors);
         return view('movies.edit', compact('movie', 'genres', 'actors'));
     }
 
-    public function update(Request $request, Movie $movie)
+    public function validateEdit(Request $request, $id)
     {
         $this->authorize('editMovie');
-
+        $movie = Movie::find($id);
         $attr = $request->validate([
-            'title' => 'required|min:2|max:50',
+            'title' => 'required|min:2|max:50|unique:movies',
             'description' => 'required|min:8',
             'genres' => 'array|required',
             'actors' => 'array|required',
             'characters' => 'array|required',
             'director' => 'required|min:3',
-            'release_date' => 'required',
-            'image_url' => 'required|mimes:jpeg,jpg,png,gif',
-            'bg_url' => 'required|mimes:jpeg,jpg,png,gif'
+            'date' => 'required',
+            'image' => 'required|mimes:jpg,jpeg,png,gif',
+            'background' => 'required|mimes:jpg,jpeg,png,gif'
         ]);
 
-        if ($request->file('image_url')) {
+        if ($request->file('image')) {
             if ($movie->image_url) {
                 Storage::delete('public/movies/thumbnail/' . $movie->image_url);
             }
-            $file = $request->file('image_url');
+            $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('storage/movies/thumbnail'), $filename);
             $attr['image_url'] = $filename;
         }
 
-        if ($request->file('bg_url')) {
+        if ($request->file('background')) {
             if ($movie->bg_url) {
-                Storage::delete('public/movies/bg-image/' . $movie->bg_url);
+                Storage::delete('public/movies/bg-image/' . $movie->background_url);
             }
-            $file = $request->file('bg_url');
+            $file = $request->file('background');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('storage/movies/bg-image'), $filename);
-            $attr['bg_url'] = $filename;
+            $attr['background_url'] = $filename;
         }
 
         $characters = $request->characters;
@@ -202,7 +203,7 @@ class MovieController extends Controller
         }
         $movie->genres()->sync(request('genres'));
 
-        return redirect('/movie/' . $movie->id)->with('success-info', 'Update Movie Successfully');
+        return redirect('/movie/' . $movie->id);
     }
 
     public function destroy(Movie $movie)

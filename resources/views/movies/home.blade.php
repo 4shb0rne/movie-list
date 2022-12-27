@@ -57,13 +57,15 @@
         </div>
         <ul class="movie-slider card-group list-unstyled cs-hidden" id="movieSlider">
             @foreach ($trendingMovies as $tm)
-                <li class="card m-2 background-dark-accent">
-                    <img src="{{ asset('storage/movies/thumbnail/' . $tm->image_url) }}" class="card-img-top movie-item-image">
-                    <div class="card-body background-dark-accent justify-content-between d-flex flex-column">
-                        <h5 class="card-title">{{$tm->title}}</h5>
-                        <p class="card-text"><small class="text-muted">{{$tm->release_date->format('Y')}}</small></p>
-                    </div>
-                </li>
+                <a href="{{ route('movie-detail', ['id'=>$tm->id]) }}">
+                    <li class="card m-2 background-dark-accent">
+                        <img src="{{ asset('storage/movies/thumbnail/' . $tm->image_url) }}" class="card-img-top movie-item-image">
+                        <div class="card-body background-dark-accent justify-content-between d-flex flex-column">
+                            <h5 class="card-title">{{$tm->title}}</h5>
+                            <p class="card-text"><small class="text-muted">{{$tm->release_date->format('Y')}}</small></p>
+                        </div>
+                    </li>
+                </a>
             @endforeach
         </ul>
         <div class="my-2 container-fluid text-light">
@@ -88,12 +90,21 @@
                     @endforeach
                 </ul>
             </div>
-            <div class="mt-2 row movie-sort">
-                <div class="col d-flex align-items-center">
-                    <span>Sort By:</span>
-                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">Latest</button>
-                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">A-Z</button>
-                    <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">Z-A</button>
+            <div class="d-flex flex-row justify-content-between">
+                <div class="mt-2 row movie-sort">
+                    <div class="col d-flex align-items-center">
+                        <span>Sort By:</span>
+                        <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">Latest</button>
+                        <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">A-Z</button>
+                        <button class="mx-2 btn btn-pill br-32 background-dark-accent text-light sort-selector">Z-A</button>
+                    </div>
+                </div>
+                <div class="mt-2 mx-2s">
+                    @auth
+                        @if (auth()->user()->isAdmin())
+                            <a class="btn btn-danger" href="{{ route('create-movie') }}">Add Movie</a>
+                        @endif
+                    @endauth
                 </div>
             </div>
         </div>

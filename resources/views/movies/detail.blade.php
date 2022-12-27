@@ -20,8 +20,12 @@
                         alt="">
                 </div>
                 <div class="col-6">
-                    <div class="mb-3">
-                        <h1>{{ $movie->title }}</h1>
+                    <div class="mb-1">
+                        <h3>{{ $movie->title }}</h3>
+                    </div>
+                    <div class="mb-2 d-flex flex-row">
+                        <i class="fa-solid fa-pen-to-square me-2 fs-5"></i>
+                        <i class="fa-solid fa-trash fs-5"></i>
                     </div>
                     <div class="mb-3 d-flex flex-wrap">
                         @foreach ($genres as $genre)
@@ -34,7 +38,7 @@
                     </div>
                     <div class="mb-3">
                         <h3>Storyline</h3>
-                        <h6 class="text-gray">{{ $movie->description }}</h6>
+                        <h6 class="text-gray fs-6">{{ $movie->description }}</h6>
                     </div>
                     <div class="mb-3">
                         <h3>{{ $movie->director }}</h3>
