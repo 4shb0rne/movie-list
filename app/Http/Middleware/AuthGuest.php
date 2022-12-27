@@ -3,11 +3,10 @@
 namespace App\Http\Middleware;
 
 use Closure;
-use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class AuthAdmin
+class AuthGuest
 {
     /**
      * Handle an incoming request.
@@ -18,12 +17,9 @@ class AuthAdmin
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!Auth::user()) {
-            return redirect('/');
-        } else if (Auth::user()->role != 'admin') {
+        if (Auth::user()) {
             return redirect('/');
         }
-
         return $next($request);
     }
 }

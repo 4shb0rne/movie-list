@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Middleware\AuthAdmin;
+use App\Http\Middleware\AuthGuest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -26,12 +27,12 @@ Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
     Route::delete('/delete/{id}', [MovieController::class, 'delete'])->name('delete-movie');
 });
 
-Route::prefix('/login')->group(function () {
+Route::prefix('/login')->middleware([AuthGuest::class])->group(function () {
     Route::get('/', [AuthController::class, 'loginView'])->name('login');
     Route::post('/', [AuthController::class, 'loginAuth'])->name('validate-login');
 });
 
-Route::prefix('/register')->group(function () {
+Route::prefix('/register')->middleware([AuthGuest::class])->group(function () {
     Route::get('/', [AuthController::class, 'register'])->name('register');
     Route::post('/', [AuthController::class, 'registerAuth'])->name('validate-register');
 });
