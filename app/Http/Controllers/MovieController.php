@@ -161,7 +161,7 @@ class MovieController extends Controller
         $this->authorize('editMovie');
         $movie = Movie::find($id);
         $attr = $request->validate([
-            'title' => 'required|min:2|max:50|unique:movies',
+            'title' => 'required|min:2|max:50',
             'description' => 'required|min:8',
             'genres' => 'array|required',
             'actors' => 'array|required',
@@ -192,18 +192,20 @@ class MovieController extends Controller
             $attr['background_url'] = $filename;
         }
 
+
         $characters = $request->characters;
         $actors = $request->actors;
         $movie->update($attr);
 
         MovieActor::where('movie_id', $movie->id)->delete();
 
-        for ($i = 0; $i < count($request->characters); $i++) {
+        for ($i = 0; $i < count($characters); $i++) {
             MovieActor::create(['character_name' => $characters[$i], 'movie_id' => $movie->id, 'actor_id' => $actors[$i]]);
         }
+
         $movie->genres()->sync(request('genres'));
 
-        return redirect('/movie/' . $movie->id);
+        return redirect('/movie/detail/' . $movie->id);
     }
 
     public function destroy(Movie $movie)

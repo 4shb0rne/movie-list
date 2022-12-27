@@ -24,8 +24,12 @@
                         <h3>{{ $movie->title }}</h3>
                     </div>
                     <div class="mb-2 d-flex flex-row">
-                        <i class="fa-solid fa-pen-to-square me-2 fs-5"></i>
-                        <i class="fa-solid fa-trash fs-5"></i>
+                        <a href="{{ route('edit-movie', ['id'=>$movie->id]) }}">
+                            <i class="fa-solid fa-pen-to-square me-2 fs-5"></i>
+                        </a>
+                        <a href="">
+                            <i class="fa-solid fa-trash fs-5"></i>
+                        </a>
                     </div>
                     <div class="mb-3 d-flex flex-wrap">
                         @foreach ($genres as $genre)

@@ -62,7 +62,7 @@
     <div class="mb-3">
         <div class="d-flex justify-content-center mb-3">
 
-            <form class="form" action="{{ route('validate-edit-movie', ['id'=>1]) }}}" enctype="multipart/form-data" method="POST">
+            <form class="form" action="{{ route('validate-edit-movie', ['id'=>$movie->id]) }}}" enctype="multipart/form-data" method="POST">
                 @csrf
                 <div class="d-flex justify-content-start mb-2 fs-3 fw-bold">
                     Edit Movie
@@ -213,7 +213,7 @@
                         </small>
                     @enderror
                 </div>
-                <button type="submit" class="btn btn-auth w-100">Add Movie</button>
+                <button type="submit" class="btn btn-auth w-100">Edit Movie</button>
             </form>
         </div>
     </div>

@@ -25,6 +25,11 @@ class MoviePolicy
         return $user->isAdmin();
     }
 
+    public function editMovie(User $user)
+    {
+        return $user->isAdmin();
+    }
+
     public function addWatchList(User $user, Movie $movie)
     {
         $count = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')
