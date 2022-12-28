@@ -23,23 +23,25 @@
                     <div class="mb-1">
                         <h3>{{ $movie->title }}</h3>
                     </div>
-                    @if (auth()->user() && auth()->user()->isAdmin())
-                        <div class="mb-2 d-flex flex-row">
-                            <a href="{{ route('edit-movie', ['id'=>$movie->id]) }}">
-                                <i class="fa-solid fa-pen-to-square me-2 fs-5"></i>
-                            </a>
-                            <form action="{{ route('delete-movie', ['id'=>$movie->id]) }}" method="POST">
-                                @csrf
-                                @method('delete')
-                                <button type="submit"
-                                    style="background: none;
-                                    padding: 0;
-                                    border:none"
-                                >
-                                    <i class="fa-solid fa-trash fs-5"></i>
-                                </button>
-                            </form>
-                        </div>
+                    @if (Auth::user())
+                        @if(Auth::user()->isAdmin())
+                            <div class="mb-2 d-flex flex-row">
+                                <a href="{{ route('edit-movie', ['id'=>$movie->id]) }}">
+                                    <i class="fa-solid fa-pen-to-square me-2 fs-5"></i>
+                                </a>
+                                <form action="{{ route('delete-movie', ['id'=>$movie->id]) }}" method="POST">
+                                    @csrf
+                                    @method('delete')
+                                    <button type="submit"
+                                        style="background: none;
+                                        padding: 0;
+                                        border:none"
+                                    >
+                                        <i class="fa-solid fa-trash fs-5"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        @endif
                     @endif
                     <div class="mb-3 d-flex flex-wrap">
                         @foreach ($genres as $genre)
