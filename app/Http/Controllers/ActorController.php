@@ -12,28 +12,23 @@ class ActorController extends Controller
     {
         $actors = Actor::paginate(10);
         $pages = Actor::count() / 10;
-
         if ($request->ajax()) {
-            if ($request->page) {
-                $view = view('actor.data', compact('actors'))->render();
-                return response()->json(['html' => $view]);
-            } else if ($request->search == '') {
-                $actors = Actor::get();
-                $view = view('actor.data', compact('actors'))->render();
+            if ($request->page || $request->search=='') {
+                $view = view('actors.card', compact('actors'))->render();
                 return response()->json(['html' => $view]);
             } else {
                 $actors = Actor::where('name', 'LIKE', '%' . $request->search . '%')->get();
-                $view = view('actor.data', compact('actors'))->render();
+                $view = view('actors.card', compact('actors'))->render();
                 return response()->json(['html' => $view]);
             }
         }
 
-        return view('actor.index', compact('actors', 'pages'));
+        return view('actors.index', compact('actors', 'pages'));
     }
 
     public function show(Actor $actor)
     {
-        return view('actor.show', compact('actor'));
+        return view('actors.show', compact('actor'));
     }
 
     public function create()
@@ -41,7 +36,7 @@ class ActorController extends Controller
         $this->authorize('addActor');
 
         $actor = new Actor();
-        return view('actor.create', compact('actor'));
+        return view('actors.create', compact('actor'));
     }
 
     public function store(Request $request)
@@ -73,7 +68,7 @@ class ActorController extends Controller
     {
         $this->authorize('addActor');
 
-        return view('actor.edit', compact('actor'));
+        return view('actors.edit', compact('actor'));
     }
 
     public function update(Request $request, Actor $actor)

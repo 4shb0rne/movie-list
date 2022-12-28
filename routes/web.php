@@ -52,14 +52,14 @@ Route::prefix('/register')->group(function () {
 //     Route::post('/{movie}/{page}', [WatchListController::class, 'action'])->name('action-watchlist');
 // });
 
-// Route::prefix('/actor')->middleware([AuthAdmin::class])->group(function () {
-//     Route::get('/', [ActorController::class, 'index'])->name('show-actor')->withoutMiddleware([AuthAdmin::class]);
-//     Route::get('/create', [ActorController::class, 'create'])->name('create-actor');
-//     Route::post('/create', [ActorController::class, 'store'])->name('store-actor');
-//     Route::get('/edit/{actor}', [ActorController::class, 'edit'])->name('edit-actor');
-//     Route::put('/edit/{actor}', [ActorController::class, 'update'])->name('update-actor');
-//     Route::get("/{actor}", [ActorController::class, 'show'])->name('show-actor-detail')->withoutMiddleware([AuthAdmin::class]);
-//     Route::delete('/{actor}', [ActorController::class, 'destroy'])->name('delete-actor');
-// });
+Route::prefix('/actor')->middleware([AuthAdmin::class])->group(function () {
+    Route::get('/', [ActorController::class, 'index'])->name('show-actor')->withoutMiddleware([AuthAdmin::class]);
+    Route::get('/create', [ActorController::class, 'create'])->name('create-actor');
+    Route::post('/create', [ActorController::class, 'store'])->name('store-actor');
+    Route::get('/edit/{actor}', [ActorController::class, 'edit'])->name('edit-actor');
+    Route::put('/edit/{actor}', [ActorController::class, 'update'])->name('update-actor');
+    Route::get("/{actor}", [ActorController::class, 'show'])->name('show-actor-detail')->withoutMiddleware([AuthAdmin::class]);
+    Route::delete('/{actor}', [ActorController::class, 'destroy'])->name('delete-actor');
+});
 
 // Route::get('/logout', [Auth\LoginController::class, 'logout'])->name('logout')->middleware('auth');

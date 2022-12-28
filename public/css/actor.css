@@ -1,0 +1,18 @@
+.actor-search {
+    background-color: rgb(50, 50, 50);
+    border: 0;
+    border-radius: 12px;
+}
+
+.card {
+    border: none !important;
+    margin-right: 1.25rem;
+    margin-bottom: 1.25rem;
+    padding: 0.75rem;
+}
+
+
+.actor-image {
+    object-fit: cover;
+    height: 280px;
+}

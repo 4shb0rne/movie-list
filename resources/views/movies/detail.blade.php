@@ -23,7 +23,7 @@
                     <div class="mb-1">
                         <h3>{{ $movie->title }}</h3>
                     </div>
-                    @if (auth()->user()->isAdmin())
+                    @if (auth()->user() && auth()->user()->isAdmin())
                         <div class="mb-2 d-flex flex-row">
                             <a href="{{ route('edit-movie', ['id'=>$movie->id]) }}">
                                 <i class="fa-solid fa-pen-to-square me-2 fs-5"></i>
