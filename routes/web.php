@@ -55,11 +55,11 @@ Route::prefix('/register')->middleware([AuthGuest::class])->group(function () {
 
 Route::prefix('/actor')->middleware([AuthAdmin::class])->group(function () {
     Route::get('/', [ActorController::class, 'index'])->name('show-actor')->withoutMiddleware([AuthAdmin::class]);
-    Route::get('/create', [ActorController::class, 'create'])->name('create-actor');
-    Route::post('/create', [ActorController::class, 'store'])->name('store-actor');
+    Route::get('/add', [ActorController::class, 'add'])->name('add-actor');
+    Route::post('/add', [ActorController::class, 'validateAdd'])->name('validate-add-actor');
     Route::get('/edit/{actor}', [ActorController::class, 'edit'])->name('edit-actor');
     Route::put('/edit/{actor}', [ActorController::class, 'update'])->name('update-actor');
-    Route::get("/{actor}", [ActorController::class, 'show'])->name('show-actor-detail')->withoutMiddleware([AuthAdmin::class]);
+    Route::get("/detail/{actor}", [ActorController::class, 'detail'])->name('actor-detail')->withoutMiddleware([AuthAdmin::class]);
     Route::delete('/{actor}', [ActorController::class, 'destroy'])->name('delete-actor');
 });
 

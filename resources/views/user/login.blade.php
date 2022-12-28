@@ -14,7 +14,7 @@
                 </span>
             </div>
             <div class="form-floating mb-3">
-                <input type="email" class="form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="name@example.com">
+                <input type="email" class="form-input form-control @error('email') is-invalid @enderror" id="email" name="email" placeholder="name@example.com">
                 <label for="email">Email address</label>
                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                 @error('email')
@@ -24,7 +24,7 @@
                 @enderror
             </div>
             <div class="form-floating mb-3">
-                <input type="password" class="form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
+                <input type="password" class="form-input form-control @error('password') is-invalid @enderror" id="password" name="password" placeholder="Password">
                 <label for="password">Password</label>
                 @error('password')
                     <small class="text-danger">
@@ -33,7 +33,7 @@
                 @enderror
             </div>
             <div class="mb-3 form-check">
-                <input type="checkbox" class="form-check-input" id="remember" name="remember">
+                <input type="checkbox" class="form-input form-check-input" id="remember" name="remember">
                 <label class="form-check-label" for="remember">Check me out</label>
             </div>
             <button type="submit" class="btn btn-auth w-100">Login</button>

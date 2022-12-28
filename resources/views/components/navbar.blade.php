@@ -16,7 +16,7 @@
                     <a class="nav-link active" href="/">Movies</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="/">Actors</a>
+                    <a class="nav-link active" href="{{ route('show-actor') }}">Actors</a>
                 </li>
                 @auth
                     @if(!auth()->user()->isAdmin())

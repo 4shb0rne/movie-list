@@ -23,7 +23,7 @@
                     <div class="mb-1">
                         <h3>{{ $movie->title }}</h3>
                     </div>
-                    @if (Auth::user())
+                    @auth
                         @if(Auth::user()->isAdmin())
                             <div class="mb-2 d-flex flex-row">
                                 <a href="{{ route('edit-movie', ['id'=>$movie->id]) }}">
@@ -42,7 +42,7 @@
                                 </form>
                             </div>
                         @endif
-                    @endif
+                    @endauth
                     <div class="mb-3 d-flex flex-wrap">
                         @foreach ($genres as $genre)
                             <button class="genre-pill fw-bold">{{ $genre->name }}</button>

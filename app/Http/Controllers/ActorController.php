@@ -26,30 +26,30 @@ class ActorController extends Controller
         return view('actors.index', compact('actors', 'pages'));
     }
 
-    public function show(Actor $actor)
+    public function detail(Actor $actor)
     {
-        return view('actors.show', compact('actor'));
+        return view('actors.detail', compact('actor'));
     }
 
-    public function create()
+    public function add()
     {
         $this->authorize('addActor');
 
         $actor = new Actor();
-        return view('actors.create', compact('actor'));
+        return view('actors.add', compact('actor'));
     }
 
-    public function store(Request $request)
+    public function validateAdd(Request $request)
     {
         $this->authorize('addActor');
 
         $attr = $request->validate([
             'name' => 'required|min:3',
-            'image_url' => 'required|mimes:jpeg,jpg,png,gif',
             'gender' => 'required',
             'biography' => 'required|min:10',
             'dob' => 'required',
             'place_of_birth' => 'required',
+            'image_url' => 'required|mimes:jpeg,jpg,png,gif',
             'popularity' => 'required|numeric'
         ]);
 
@@ -61,7 +61,7 @@ class ActorController extends Controller
         }
 
         Actor::create($attr);
-        return redirect('/actor')->with('success-info', 'Add Actor Successfully');
+        return redirect('/actor');
     }
 
     public function edit(Actor $actor)

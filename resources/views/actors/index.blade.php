@@ -79,7 +79,7 @@
                         placeholder="Search actors...">
                     @auth
                         @if (auth()->user()->isAdmin())
-                            <a class="ms-2 btn btn-danger">Add Actor</a>
+                            <a class="ms-2 btn btn-danger" href="{{ route('add-actor') }}">Add Actor</a>
                         @endif
                     @endauth
                 </div>

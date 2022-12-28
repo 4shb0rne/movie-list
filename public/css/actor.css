@@ -16,3 +16,23 @@
     object-fit: cover;
     height: 280px;
 }
+
+.actor-detail-image {
+    height: 320px;
+    width: 220px;
+    border: 1px solid white;
+    border-radius: 8px;
+}
+
+.movie-image {
+    object-fit: cover;
+    height: 280px;
+}
+
+.movie-card {
+    padding: 0.5rem !important;
+}
+
+.movie-card-body {
+    padding: 0 !important;
+}
