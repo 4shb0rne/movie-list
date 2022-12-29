@@ -44,10 +44,7 @@
             </div>
             <div class="mb-3">
                 <label for="biography form-label">Biography</label>
-                <textarea class="form-control text-area form-input" placeholder="Please leave a biography here.." id="biography"
-                    name="biography">
-                    {{old('biography', $actor->biography)}}
-                </textarea>
+                <textarea class="form-control text-area form-input" placeholder="Please leave a biography here.." id="biography" name="biography">{{old('biography', $actor->biography)}}</textarea>
                 @error('biography')
                     <small class="text-danger">
                         {{ $message }}

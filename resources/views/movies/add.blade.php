@@ -39,7 +39,7 @@
             let html = '<div class="d-flex flex-row mb-3" >'+
                                 '<div class="form-floating me-2 w-50">'+
                                     `<select name="actors[]" id="${id}" class="form-select form-input">`+
-                                        '<option value="-1" selected>Select an Author</option>'
+                                        '<option value="-1" selected>Select an Actor</option>'
             actors.forEach(actor => {
                 html += '<option value="'+actor.id+'">'+actor.name+'</option>'
             })
@@ -111,7 +111,7 @@
                         <div class="d-flex flex-row mb-3" >
                             <div class="form-floating me-2 w-50">
                                 <select name="actors[]" id="actor-1" class="form-select form-input">
-                                    <option value="-1" selected>Select an Author</option>
+                                    <option value="-1" selected>Select an Actor</option>
                                     @foreach ($actors as $actor)
                                         <option value="{{$actor->id}}">{{$actor->name}}</option>
                                     @endforeach
