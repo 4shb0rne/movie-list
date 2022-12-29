@@ -166,3 +166,10 @@ a:visited {
     transition: ease-in-out 0.3s;
     box-shadow: 1px 1px 2px 1px #ff656d96;
 }
+
+.user-profile-image {
+    border-radius: 50%;
+    width: 5rem;
+    height: 5rem;
+    object-fit: contain;
+}

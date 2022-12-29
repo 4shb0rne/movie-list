@@ -20,3 +20,8 @@
     overflow: auto;
     height: 140px !important;
 }
+
+.modal-background {
+    border-radius: 12px;
+    background-color: rgb(50, 50, 50);
+}

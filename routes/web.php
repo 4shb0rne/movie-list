@@ -43,10 +43,10 @@ Route::prefix('/register')->middleware([AuthGuest::class])->group(function () {
 // });
 
 
-// Route::prefix('/profile')->middleware('auth')->group(function () {
-//     Route::get('/', [UserController::class, 'index'])->name('show-profile');
-//     Route::put('/', [UserController::class, 'update'])->name('update-profile');
-// });
+Route::prefix('/profile')->middleware('auth')->group(function () {
+    Route::get('/', [UserController::class, 'profile'])->name('view-profile');
+    Route::put('/', [UserController::class, 'update'])->name('validate-edit-profile');
+});
 
 // Route::prefix('/watchlist')->middleware('auth')->group(function () {
 //     Route::get('/', [WatchListController::class, 'index'])->name('show-watchlist');

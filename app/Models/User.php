@@ -35,6 +35,7 @@ class User extends Authenticatable
         'date_joined',
         'phone',
         'role',
+        'image_url',
     ];
 
     /**

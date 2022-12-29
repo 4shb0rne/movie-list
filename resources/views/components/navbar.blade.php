@@ -25,7 +25,7 @@
                         </li>
                     @endif
                     <li class="nav-item d-flex alignt-items-center">
-                        <a class="nav-link active" href="/">
+                        <a class="nav-link active" href="{{ route('view-profile') }}">
                             <i class="fa-solid fa-circle-user" style="font-size: 1.2rem"></i>
                         </a>
                     </li>
