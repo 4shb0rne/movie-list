@@ -33,7 +33,7 @@ class ActorController extends Controller
 
     public function add()
     {
-        $this->authorize('addActor');
+        $this->authorize('modifyActor');
 
         $actor = new Actor();
         return view('actors.add', compact('actor'));
@@ -41,7 +41,7 @@ class ActorController extends Controller
 
     public function validateAdd(Request $request)
     {
-        $this->authorize('addActor');
+        $this->authorize('modifyActor');
 
         $attr = $request->validate([
             'name' => 'required|min:3',
@@ -66,14 +66,13 @@ class ActorController extends Controller
 
     public function edit(Actor $actor)
     {
-        $this->authorize('addActor');
-
+        $this->authorize('modifyActor');
         return view('actors.edit', compact('actor'));
     }
 
-    public function update(Request $request, Actor $actor)
+public function validateEdit(Request $request, Actor $actor)
     {
-        $this->authorize('addActor');
+        $this->authorize('modifyActor');
         $attr = $request->validate([
             'name' => 'required|min:3',
             'image_url' => 'required|mimes:jpeg,jpg,png,gif',
@@ -100,7 +99,7 @@ class ActorController extends Controller
 
     public function destroy(Actor $actor)
     {
-        $this->authorize('addActor');
+        $this->authorize('modifyActor');
 
         Storage::delete('public/actors/' . $actor->image_url);
         $actor->delete();

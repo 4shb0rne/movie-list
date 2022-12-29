@@ -7,7 +7,7 @@
 }
 
 .background-red {
-    background-color: #E50914;
+    background-color: #E50914 !important;
 }
 
 .color-red {

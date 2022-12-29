@@ -12,6 +12,24 @@
                     background-size: cover;
                     background-position: center;
                 ">
+                    <div class="d-flex flex-column p-1">
+                        <div>
+                            <a href="{{ route('edit-actor', ['actor'=>$actor->id]) }}">
+                                <i class="fa-solid fa-pen-to-square me-2 fs-5 background-red circle-icon"></i>
+                            </a>
+                        </div>
+                        <form action="{{ route('delete-actor', ['actor'=>$actor->id]) }}" method="POST">
+                            @csrf
+                            @method('delete')
+                            <button type="submit"
+                                style="background: none;
+                                padding: 0;
+                                border:none"
+                            >
+                                <i class="fa-solid fa-trash fs-5 background-red circle-icon"></i>
+                            </button>
+                        </form>
+                    </div>
                 </div>
             </div>
             <div class="col-6">
@@ -25,7 +43,7 @@
                 <div class="mt-3">
                     <h4 class="fw-normal">Known For</h4>
                     <div class="d-flex flex-wrap">
-                        @foreach ($actor->movies as $m)
+                        @forelse ($actor->movies as $m)
                             <a href="{{ route('movie-detail', $m->id) }}">
                                 <div class="card movie-card bg-dark" style="width: 14rem;">
                                     <img src="{{ asset('storage/movies/thumbnail/'.$m->image_url) }}" class="movie-image" alt="...">
@@ -34,7 +52,9 @@
                                     </div>
                                 </div>
                             </a>
-                        @endforeach
+                        @empty
+                            <p class="fs-6">No Movies yet ...</p>
+                        @endforelse
                     </div>
                 </div>
             </div>

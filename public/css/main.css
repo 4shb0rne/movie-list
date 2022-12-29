@@ -155,3 +155,14 @@ a:visited {
     color: #E50914 !important;
     transition: ease-in-out 0.3s !important;
 }
+
+.btn-auth {
+    background-color: #E50914;
+    color: white;
+}
+
+.btn-auth:hover {
+    background-color: #a7040c;
+    transition: ease-in-out 0.3s;
+    box-shadow: 1px 1px 2px 1px #ff656d96;
+}
