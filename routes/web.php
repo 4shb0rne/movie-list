@@ -37,21 +37,17 @@ Route::prefix('/register')->middleware([AuthGuest::class])->group(function () {
     Route::post('/', [AuthController::class, 'registerAuth'])->name('validate-register');
 });
 
-// Route::prefix('/api/addWatchlist')->middleware('auth')->group(function () {
-//     Route::post('/{movie}', [WatchListController::class, 'store'])->name('store-watchlist');
-//     Route::delete('/{movie}', [WatchListController::class, 'destroy'])->name('delete-watchlist');
-// });
-
 
 Route::prefix('/profile')->middleware('auth')->group(function () {
     Route::get('/', [UserController::class, 'profile'])->name('view-profile');
     Route::put('/', [UserController::class, 'update'])->name('validate-edit-profile');
 });
 
-// Route::prefix('/watchlist')->middleware('auth')->group(function () {
-//     Route::get('/', [WatchListController::class, 'index'])->name('show-watchlist');
-//     Route::post('/{movie}/{page}', [WatchListController::class, 'action'])->name('action-watchlist');
-// });
+Route::prefix('/watchlist')->middleware('auth')->group(function () {
+    Route::post('/modify/{id}', [WatchListController::class, 'modify'])->name('modify');
+    Route::get('/', [WatchListController::class, 'index'])->name('show-watchlist');
+    Route::post('/{movie}/{page}', [WatchListController::class, 'action'])->name('action-watchlist');
+});
 
 Route::prefix('/actor')->middleware([AuthAdmin::class])->group(function () {
     Route::get('/', [ActorController::class, 'index'])->name('show-actor')->withoutMiddleware([AuthAdmin::class]);
@@ -62,5 +58,3 @@ Route::prefix('/actor')->middleware([AuthAdmin::class])->group(function () {
     Route::get("/detail/{actor}", [ActorController::class, 'detail'])->name('actor-detail')->withoutMiddleware([AuthAdmin::class]);
     Route::delete('/delete/{actor}', [ActorController::class, 'destroy'])->name('delete-actor');
 });
-
-// Route::get('/logout', [Auth\LoginController::class, 'logout'])->name('logout')->middleware('auth');

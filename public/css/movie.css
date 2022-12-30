@@ -29,9 +29,14 @@
     border-radius: 32px;
 }
 
+.movie-container {
+    width: 220px;
+    padding: 0.5rem
+}
+
 .movie-image {
     height: 275px;
-    width: 170px;
+    width: 100%;
     object-fit: cover;
 }
 

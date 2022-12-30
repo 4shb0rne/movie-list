@@ -1,6 +1,13 @@
 $(document).ready(function() {
     setUpSliders()
+    watchListClick()
+
     const movieList = $("#movie-list-container")
+
+    // movieList.on("click", "button.add-watchlist-btn", function() {
+    //     alert($(this).attr("contentID"));
+    // });
+
     const pages = document.getElementById('pager').textContent;
     var activeGenre
     var activeSort
@@ -10,7 +17,7 @@ $(document).ready(function() {
     const genreList = document.querySelectorAll('.genre-selector')
     const sortList = document.querySelectorAll('.sort-selector')
     const search = $('#search-movie')
-    // console.log(genreList)
+
     $(window).scroll(function () {
         const currScroll = $(window).scrollTop() + $(window).height() + 1;
         if (currScroll >= $(document).height() && pages > currPage && !activeGenre && !activeSort) {
@@ -66,7 +73,7 @@ $(document).ready(function() {
     });
 
     function loadMovies(page) {
-        console.log(page)
+        // console.log(page)
         $.ajax({
                 url: "?page="+page,
                 type: "get",
@@ -76,6 +83,7 @@ $(document).ready(function() {
                     return;
                 }
                 movieList.append(data.html);
+                watchListClick()
             })
             .fail(function(jqXHR, ajaxOptions, thrownError) {
                 console.log(jqXHR)
@@ -105,6 +113,7 @@ $(document).ready(function() {
             }
             movieList.empty()
             movieList.append(data.html)
+            watchListClick()
         })
         .fail(function(jqXHR, ajaxOptions, thrownError) {
             console.log(jqXHR)
@@ -118,7 +127,40 @@ $(document).ready(function() {
         currPage = 1;
         loadMovies(currPage)
     }
+
+    function watchListClick() {
+        const addBtn = $('.add-watchlist-btn')
+        addBtn.each(function () {
+            $(this).off('click');
+            $(this).on('click', function () {
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    url: "/watchlist/modify/"+$(this).val(),
+                    type: "POST",
+                    data: {},
+                    contentType: false,
+                    processData: false,
+                    error: (data) => {
+                        console.log(data.responseJSON);
+                    },
+                    success: (data) => {
+                        if (data.isAdd) {
+                            $(this).html('<i class="fas fa-check text-danger"></i>');
+                        } else {
+                            $(this).html('<i class="fas fa-plus text-muted"></i>');
+                        }
+                    }
+                })
+            });
+        });
+
+    }
 });
+
 
 
 function setUpSliders() {
