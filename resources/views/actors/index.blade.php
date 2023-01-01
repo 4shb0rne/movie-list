@@ -4,6 +4,7 @@
     <script defer>
         var currPage = 1;
         var searchQuery = ""
+        console.log(currPage)
         $(document).ready(function() {
             const actorContainer = $("#actor-container")
             const search = $('#search-actor')
@@ -12,6 +13,7 @@
                 const currScroll = $(window).scrollTop() + $(window).height() + 1;
                 if (currScroll >= $(document).height() && {{ $pages }} > currPage && searchQuery == "") {
                     currPage++
+                    console.log(currPage)
                     loadActors(currPage)
                 }
 
