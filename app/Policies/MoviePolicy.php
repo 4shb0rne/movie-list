@@ -2,7 +2,7 @@
 
 namespace App\Policies;
 
-use App\Models\{User, Movie, Review};
+use App\Models\{User, Movie};
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class MoviePolicy
@@ -15,35 +15,37 @@ class MoviePolicy
      * @return void
      */
 
-    public function addMovie(User $user)
+    public function createMovie(User $user)
     {
-        return ($user->isAdmin());
+        return $user->isAdmin();
     }
 
-    public function addActor(User $user)
+    public function createActor(User $user)
     {
-        return ($user->isAdmin());
+        return $user->isAdmin();
+    }
+
+    public function editMovie(User $user)
+    {
+        return $user->isAdmin();
     }
 
     public function addWatchList(User $user, Movie $movie)
     {
-        $count = Movie::join('watchlists', 'shows.id', '=', 'watchlists.show_id')->where('shows.id', '=', $movie->id)
-            ->where('user_id', '=', $user->id)->count();
-        if ($count == 0) {
-            return true;
-        } else {
-            return false;
-        }
+        $count = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')
+            ->where('movies.id', '=', $movie->id)
+            ->where('user_id', '=', $user->id)
+            ->count();
+        return $count <= 0;
     }
 
-    public function actionWatchList(User $user, Movie $movie)
+    public function updateWatchList(User $user, Movie $movie)
     {
-        $count = Movie::join('watchlists', 'shows.id', '=', 'watchlists.show_id')->where('shows.id', '=', $movie->id)
-            ->where('user_id', '=', $user->id)->count();
-        if ($count == 1) {
-            return true;
-        } else {
-            return false;
-        }
+        $count = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')
+            ->where('movies.id', '=', $movie->id)
+            ->where('user_id', '=', $user->id)
+            ->count();
+
+        return $count == 1;
     }
 }

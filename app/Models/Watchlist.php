@@ -7,16 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Watchlist extends Model
 {
-    use HasFactory;
-    protected $table = 'watchlists';
     public $timestamps = false;
-    protected $primaryKey = ["show_id", "user_id"];
-    public $incrementing = false;
-
-
+    use HasFactory;
     protected $fillable = [
-        'show_id',
+        'movie_id',
         'user_id',
-        'status'
+        'status',
     ];
 }

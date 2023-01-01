@@ -1,0 +1,23 @@
+.background-dark-accent {
+    background-color: rgb(50, 50, 50);
+}
+
+.background-dark {
+    background-color: rgb(22, 22, 22) !important;
+}
+
+.background-red {
+    background-color: #E50914 !important;
+}
+
+.color-red {
+    color: #E50914;
+}
+
+.color-green {
+    color: #31c400;
+}
+
+.border-light {
+    border: 1px solid white !important;
+}

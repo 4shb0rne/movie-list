@@ -1,92 +1,59 @@
-@extends('layouts.app', ['title' => 'Wachlist'])
-@section('library')
+@extends('layouts.template', ['title' => 'Watchlists'])
+@section('header')
+    <link rel="stylesheet" href="{{ asset('css/form.css') }}">
     <link rel="stylesheet" href="{{ asset('css/watchlist.css') }}">
+    <script src="{{ asset('js/watchlist.js') }}" defer></script>
 @endsection
 @section('content')
-    <div class="watchlist">
-        <div class="title-section cust-container cust-row">
-            <i class="fa fa-bookmark bookmark-icon textRed"></i>
-            <h1 class="cust-row">My<span class="textRed">Watchlist</span></h1>
-        </div>
-
-        <div class="search-section cust-container cust-col">
-            <div class="search-section__bar cust-row">
-                <input type="text" name="" id="search-input" placeholder="Search your watchlist..."
-                    class="search-section__input">
-                <i class="fa fa-search search-icon"></i>
+    <div class="d-flex flex-column w-100 justify-content-between py-3 px-5" style="min-height: 50vh">
+        <div>
+            <div>
+                <h3 class="fw-bold">My <span class="color-red">Watchlists</span></h3>
             </div>
-
-            <div class="search-section__filter cust-row">
-                <i class="fas fa-filter filter-icon"></i>
-                <select class="form-select filter-select">
-                    <option value="all" selected>All</option>
-                    <option value="planning">Planned</option>
-                    <option value="watching">Watching</option>
-                    <option value="finished">Finished</option>
+            <div class="mb-3">
+                <input type="text" class="form-input form-control w-100 text-light py-2" name="search"
+                    id="search-watchlist" placeholder="Search something...">
+            </div>
+            <div class="d-flex flex-row align-items-center mb-3">
+                <i class="fa-solid fa-filter fs-4 me-2"></i>
+                <select name="filter" class="form-select form-input" style="width: auto" id="filter">
+                    <option value="All">All</option>
+                    <option value="Planning">Planning</option>
+                    <option value="Watching">Watching</option>
+                    <option value="Finished">Finished</option>
                 </select>
             </div>
-        </div>
-        <div class="watchlist-section cust-container cust-col">
-            <div class="watchlist-title cust-row">
-                <h4 class="row-item">Poster</h4>
-                <h4 class="row-item">Title</h4>
-                <h4 class="row-item">Status</h4>
-                <h4 class="row-item--action">Action</h4>
+            <div class="d-flex flex-column px-1">
+                <div class="row mb-3">
+                    <div class="col-3">Poster</div>
+                    <div class="col-4">Title</div>
+                    <div class="col-3">Status</div>
+                    <div class="col-2">Action</div>
+                </div>
+                <div id="watchlist-container">
+                    @include("watchlists.card")
+                </div>
             </div>
-            <div id="watchlist-container">
-                @include('watchlists.data')
-            </div>
-            {{ $watchlists->appends(request()->except('page'))->links() }}
         </div>
+        <nav aria-label="Page navigation example" class="mt-1">
+            <ul class="pagination justify-content-end align-items-end mx-2">
+                <li class="page-item">
+                    <a class="page-link" href="{{ $watchlists->previousPageUrl() }}">Prev</a>
+                </li>
+                @for ($i = 1; $i <= $watchlists->lastPage(); $i++)
+                    @if ($i == $watchlists->currentPage())
+                        <li class="page-item active" aria-current="page">
+                            <a class="page-link" href="#">{{ $i }}</a>
+                        </li>
+                    @else
+                        <li class="page-item"><a class="page-link" href="{{ $watchlists->url($i) }}">{{ $i }}</a>
+                        </li>
+                    @endif
+                @endfor
+                <li class="page-item">
+                    <a class="page-link" href="{{ $watchlists->nextPageUrl() }}">Next</a>
+                </li>
+            </ul>
+        </nav>
     </div>
-    <script>
-        const filterSelect = document.querySelector('.filter-select');
-        filterSelect.addEventListener("change", function() {
-            $('#paginator-container').remove();
-            $.ajax({
-                    url: '?filter=' + this.value,
-                    type: "get",
-                })
-                .done(function(data) {
-                    $("#watchlist-container").empty();
-                    $("#watchlist-container").append(data.html);
-                })
-                .fail(function(jqXHR, ajaxOptions, thrownError) {
-                    console.log(jqXHR.responseJSON);
-                    alert('server not responding...');
-                });
-        });
-
-        $('#search-input').keyup(function() {
-            var search = $(this).val();
-            $('#paginator-container').remove();
-            if (filterSelect.value != 'all') {
-                $.ajax({
-                        url: '?search=' + search + '&filter=' + filterSelect.value,
-                        type: "get",
-                    })
-                    .done(function(data) {
-                        $("#watchlist-container").empty();
-                        $("#watchlist-container").append(data.html);
-                    })
-                    .fail(function(jqXHR, ajaxOptions, thrownError) {
-                        console.log(jqXHR.responseJSON);
-                        alert('server not responding...');
-                    });
-            } else {
-                $.ajax({
-                        url: '?search=' + search,
-                        type: "get",
-                    })
-                    .done(function(data) {
-                        $("#watchlist-container").empty();
-                        $("#watchlist-container").append(data.html);
-                    })
-                    .fail(function(jqXHR, ajaxOptions, thrownError) {
-                        console.log(jqXHR.responseJSON);
-                        alert('server not responding...');
-                    });
-            }
-        });
-    </script>
 @endsection

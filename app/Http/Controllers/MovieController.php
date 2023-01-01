@@ -4,11 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Actor;
 use App\Models\Cast;
-use App\Models\Category;
 use App\Models\Genre;
 use App\Models\Movie;
-use App\Models\Review;
-use App\Models\User;
+use App\Models\MovieActor;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -16,8 +14,7 @@ use Illuminate\Support\Facades\Storage;
 class MovieController extends Controller
 {
 
-    public function index(Request $request)
-    {
+    public function index(Request $request) {
         $movies = Movie::paginate(5);
 
         $trendingMovies = Movie::get();
@@ -29,185 +26,140 @@ class MovieController extends Controller
         $genres = Genre::get();
 
         $randomMovies = Movie::inRandomOrder()->limit(3)->get();
-
-        $pages = Movie::count() / 5;
+        $pages = ceil(Movie::count() / 5);
 
         if ($request->ajax() && $request->page) {
-            $view = view('movie.data', compact('movies'))->render();
+            $view = view('movies.card', compact('movies'))->render();
             return response()->json(['html' => $view]);
-        } else if ($request->ajax() && $request->genre && !$request->sort) {
-            if ($request->search == '') {
-                $moviesGenres = Movie::join('show_genre', 'shows.id', '=', 'show_genre.show_id')
-                    ->join('genres', 'show_genre.genre_id', '=', 'genres.id')
-                    ->where('genres.name', $request->genre)->get();
-                foreach($moviesGenres as $movieGenre){
-                    $movieGenre->id = $movieGenre->show_id;
-                }
-                $view = view('movie.data', ['movies' => $moviesGenres])->render();
-                return response()->json(['html' => $view]);
-            } else {
-                $moviesGenres = Movie::join('show_genre', 'shows.id', '=', 'show_genre.show_id')
-                    ->join('genres', 'show_genre.genre_id', '=', 'genres.id')
-                    ->where('genres.name', $request->genre)
-                    ->where('shows.title', 'LIKE', '%' . $request->search . '%')->get();
-                $view = view('movie.data', ['movies' => $moviesGenres])->render();
-                foreach($moviesGenres as $movieGenre){
-                    $movieGenre->id = $movieGenre->show_id;
-                }
-                return response()->json(['html' => $view]);
-            }
-        } else if ($request->ajax() && !$request->genre && $request->sort) {
-            if ($request->search == '') {
-                $moviesSort = '';
-                if ($request->sort == 'Latest') {
-                    $moviesSort = Movie::latest('release_date')->get();
-                } else if ($request->sort == 'A-Z') {
-                    $moviesSort = Movie::select('*')->orderBy('title')->get();
-                } else if ($request->sort == 'Z-A') {
-                    $moviesSort = Movie::select('*')->orderBy('title', 'desc')->get();
-                }
-                $view = view('movie.data', ['movies' => $moviesSort])->render();
-                return response()->json(['html' => $view]);
-            } else {
-                $moviesSort = '';
-                if ($request->sort == 'Latest') {
-                    $moviesSort = Movie::latest('release_date')
-                        ->where('shows.title', 'LIKE', '%' . $request->search . '%')->get();
-                } else if ($request->sort == 'A-Z') {
-                    $moviesSort = Movie::select('*')->orderBy('title')
-                        ->where('shows.title', 'LIKE', '%' . $request->search . '%')->get();
-                } else if ($request->sort == 'Z-A') {
-                    $moviesSort = Movie::select('*')->orderBy('title', 'desc')
-                        ->where('shows.title', 'LIKE', '%' . $request->search . '%')->get();
-                }
-                $view = view('movie.data', ['movies' => $moviesSort])->render();
-                return response()->json(['html' => $view]);
-            }
-        } else if ($request->ajax() && $request->genre && $request->sort) {
-            if ($request->search == '') {
-                $moviesMix = Movie::join('show_genre', 'shows.id', '=', 'show_genre.show_id')
-                    ->join('genres', 'show_genre.genre_id', '=', 'genres.id')
-                    ->where('genres.name', $request->genre);
-                if ($request->sort == 'Latest') {
-                    $moviesMix = $moviesMix->orderBy('release_date', 'desc')->get();
-                } else if ($request->sort == 'A-Z') {
-                    $moviesMix = $moviesMix->orderBy('title')->get();
-                } else if ($request->sort == 'Z-A') {
-                    $moviesMix = $moviesMix->orderBy('title', 'desc')->get();
-                }
-                $view = view('movie.data', ['movies' => $moviesMix])->render();
-                return response()->json(['html' => $view]);
-            } else {
-                $moviesMix = Movie::join('show_genre', 'shows.id', '=', 'show_genre.show_id')
-                    ->join('genres', 'show_genre.genre_id', '=', 'genres.id')
-                    ->where('genres.name', $request->genre)
-                    ->where('shows.title', 'LIKE', '%' . $request->search . '%');
-                if ($request->sort == 'Latest') {
-                    $moviesMix = $moviesMix->orderBy('release_date', 'desc')->get();
-                } else if ($request->sort == 'A-Z') {
-                    $moviesMix = $moviesMix->orderBy('title')->get();
-                } else if ($request->sort == 'Z-A') {
-                    $moviesMix = $moviesMix->orderBy('title', 'desc')->get();
-                }
-                $view = view('movie.data', ['movies' => $moviesMix])->render();
-                return response()->json(['html' => $view]);
-            }
-        } else if ($request->ajax() && !$request->genre && !$request->sort) {
-            if ($request->search == '') {
-                $moviesGenres = Movie::get();
-                $view = view('movie.data', ['movies' => $moviesGenres])->render();
-                return response()->json(['html' => $view]);
-            } else {
-                $moviesGenres = Movie::where('shows.title', 'LIKE', '%' . $request->search . '%')->get();
-                $view = view('movie.data', ['movies' => $moviesGenres])->render();
-                return response()->json(['html' => $view]);
-            }
-        }
 
-        return view('movie.index', compact('movies', 'trendingMovies', 'genres', 'randomMovies', 'pages'));
+        } else if ($request->ajax()) {
+            $genre = $request->genre;
+            $sort = $request->sort;
+            $search = $request->search;
+            $movies = Movie::select('*');
+
+            if ($genre != "-1") {
+                $filtered = Movie::join('movie_genres', 'movies.id', '=', 'movie_genres.movie_id')
+                            ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
+                            ->where('genres.name', $genre);
+            } else {
+                $filtered = $movies;
+            }
+
+            if ($sort != "-1" ) {
+                $indicator = "";
+                $order = "asc";
+                if ($sort == "Latest") {
+                    $indicator = 'release_date';
+                    $order = "desc";
+                } else if ($sort == "A-Z") {
+                    $indicator = 'title';
+                } else if ($sort == "Z-A") {
+                    $indicator = 'title';
+                    $order = "desc";
+                }
+
+                $sorted = $filtered->orderBy($indicator, $order);
+            } else {
+                $sorted = $filtered;
+            }
+
+            if ($search != "-1") {
+                $searchedMovies = $sorted->where('movies.title', 'LIKE', '%' . $request->search . '%');
+            } else {
+                $searchedMovies = $sorted;
+            }
+
+            $view = view('movies.card', ['movies' => $searchedMovies->get()])->render();
+            return response()->json(['html' => $view]);
+        }
+        return view('movies.home', compact('movies', 'trendingMovies', 'genres', 'randomMovies', 'pages'));
     }
 
-    public function show(Movie $movie)
+
+    public function detail($id)
     {
-        $genres = DB::table('show_genre')
-            ->join('genres', 'show_genre.genre_id', '=', 'genres.id')
-            ->where('show_id', $movie->id)->get();
+        $genres = DB::table('movie_genres')
+            ->join('genres', 'movie_genres.genre_id', '=', 'genres.id')
+            ->where('movie_id', $id)
+            ->get();
 
+        $actors = DB::table('movies')
+            ->join('movie_actors', 'movies.id', '=', 'movie_actors.movie_id')
+            ->join('actors', 'movie_actors.actor_id', '=', 'actors.id')
+            ->where('movies.id', $id)
+            ->get();
 
-        $actors = DB::table('shows')
-            ->join('casts', 'shows.id', '=', 'casts.show_id')
-            ->join('actors', 'casts.actor_id', '=', 'actors.id')
-            ->where('shows.id', $movie->id)->get();
-        $movies = Movie::get();
+        $more = DB::table('movies')->where('movies.id','<>',$id)->get();
 
-
-        return view('movie.detail', compact('movie', 'actors', 'genres', 'movies'));
+        $movie = Movie::where('id',$id)->first();
+        return view('movies.detail', compact('movie', 'actors', 'genres', 'more'));
     }
 
     public function create()
     {
-        $this->authorize('addMovie');
-        $movie = new Movie();
-        $genres = Genre::get();
-        $actors = Actor::get();
-        return view('movie.create', compact('movie', 'genres', 'actors'));
+        $this->authorize('createMovie');
+        $genres = Genre::all();
+        $actors = Actor::all();
+        return view('movies.add', compact('genres', 'actors'));
     }
 
-    public function store(Request $request)
+    public function validateCreate(Request $request)
     {
-        $this->authorize('addMovie');
+        $this->authorize('createMovie');
 
         $attr = $request->validate([
-            'title' => 'required|min:2|max:50',
+            'title' => 'required|min:2|max:50|unique:movies',
             'description' => 'required|min:8',
             'genres' => 'array|required',
             'actors' => 'array|required',
             'characters' => 'array|required',
             'director' => 'required|min:3',
-            'release_date' => 'required',
-            'image_url' => 'required',
-            'bg_url' => 'required'
+            'date' => 'required',
+            'image' => 'required|mimes:jpg,jpeg,png,gif',
+            'background' => 'required|mimes:jpg,jpeg,png,gif'
         ]);
 
-        if ($request->file('image_url')) {
-            $file = $request->file('image_url');
+        if ($request->file('image')) {
+            $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('storage/movies/thumbnail'), $filename);
             $attr['image_url'] = $filename;
         }
 
-        if ($request->file('bg_url')) {
-            $file = $request->file('bg_url');
+        if ($request->file('background')) {
+            $file = $request->file('background');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('storage/movies/bg-image'), $filename);
-            $attr['bg_url'] = $filename;
+            $attr['background_url'] = $filename;
         }
 
         $characters = $request->characters;
         $actors = $request->actors;
         $movie = Movie::create($attr);
-
         for ($i = 0; $i < count($characters); $i++) {
-            Cast::create(['character_name' => $characters[$i], 'show_id' => $movie->id, 'actor_id' => $actors[$i]]);
+            MovieActor::create(['character_name' => $characters[$i], 'movie_id' => $movie->id, 'actor_id' => $actors[$i]]);
         }
 
         $movie->genres()->attach(request('genres'));
-        return redirect('/')->with('success-info', 'Add Movie Successfully');
+        return redirect('/');
     }
 
-    public function edit(Movie $movie)
+    public function edit($id)
     {
         $this->authorize('editMovie');
 
         $genres = Genre::get();
         $actors = Actor::get();
-        return view('movie.edit', compact('movie', 'genres', 'actors'));
+        $movie = Movie::find($id);
+        // dd($movie->actors);
+        return view('movies.edit', compact('movie', 'genres', 'actors'));
     }
 
-    public function update(Request $request, Movie $movie)
+    public function validateEdit(Request $request, $id)
     {
         $this->authorize('editMovie');
-
+        $movie = Movie::find($id);
         $attr = $request->validate([
             'title' => 'required|min:2|max:50',
             'description' => 'required|min:8',
@@ -215,53 +167,55 @@ class MovieController extends Controller
             'actors' => 'array|required',
             'characters' => 'array|required',
             'director' => 'required|min:3',
-            'release_date' => 'required',
-            'image_url' => 'required|mimes:jpeg,jpg,png,gif',
-            'bg_url' => 'required|mimes:jpeg,jpg,png,gif'
+            'date' => 'required',
+            'image' => 'required|mimes:jpg,jpeg,png,gif',
+            'background' => 'required|mimes:jpg,jpeg,png,gif'
         ]);
 
-        if ($request->file('image_url')) {
+        if ($request->file('image')) {
             if ($movie->image_url) {
                 Storage::delete('public/movies/thumbnail/' . $movie->image_url);
             }
-            $file = $request->file('image_url');
+            $file = $request->file('image');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('storage/movies/thumbnail'), $filename);
             $attr['image_url'] = $filename;
         }
 
-        if ($request->file('bg_url')) {
+        if ($request->file('background')) {
             if ($movie->bg_url) {
-                Storage::delete('public/movies/bg-image/' . $movie->bg_url);
+                Storage::delete('public/movies/bg-image/' . $movie->background_url);
             }
-            $file = $request->file('bg_url');
+            $file = $request->file('background');
             $filename = date('YmdHi') . $file->getClientOriginalName();
             $file->move(public_path('storage/movies/bg-image'), $filename);
-            $attr['bg_url'] = $filename;
+            $attr['background_url'] = $filename;
         }
+
 
         $characters = $request->characters;
         $actors = $request->actors;
         $movie->update($attr);
 
-        Cast::where('show_id', $movie->id)->delete();
+        MovieActor::where('movie_id', $movie->id)->delete();
 
-        for ($i = 0; $i < count($request->characters); $i++) {
-            Cast::create(['character_name' => $characters[$i], 'show_id' => $movie->id, 'actor_id' => $actors[$i]]);
+        for ($i = 0; $i < count($characters); $i++) {
+            MovieActor::create(['character_name' => $characters[$i], 'movie_id' => $movie->id, 'actor_id' => $actors[$i]]);
         }
+
         $movie->genres()->sync(request('genres'));
 
-        return redirect('/movie/' . $movie->id)->with('success-info', 'Update Movie Successfully');
+        return redirect('/movie/detail/' . $movie->id);
     }
 
-    public function destroy(Movie $movie)
+    public function delete($id)
     {
         $this->authorize('editMovie');
-
+        $movie = Movie::find($id);
         Storage::delete('public/movies/thumbnail/' . $movie->image_url);
         Storage::delete('public/movies/bg-image/' . $movie->bg_url);
 
-        Cast::where('show_id', $movie->id)->delete();
+        MovieActor::where('movie_id', $movie->id)->delete();
         $movie->genres()->detach();
         $movie->delete();
         return redirect('/')->with('success-info', 'Delete Movie Successfully');

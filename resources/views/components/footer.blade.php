@@ -1,28 +1,31 @@
-<footer class="py-3">
-    <div class="container d-flex flex-column align-items-center">
-        <a href="{{ route('show-home') }}" class="footer-brand">Movie<span class="text-light">List</span></a>
-        <p class="footer-text"><a href="{{ route('show-home') }}" class="fw-bolder footer-link">Movies<span
-                    class="text-light">List</span></a> is a
-            Website that contains list of movie</p>
-        <div class="d-flex justify-content-between footer-logo mb-3">
-            <a href="https://twitter.com/netflix?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor"
-                target="_blank"><i class=" fab fa-twitter"></i></a>
-            <a href="https://www.instagram.com/netflixid/?hl=id" target="_blank"><i class=" fab fa-instagram"></i></a>
-            <a href="https://www.facebook.com/NetflixIndonesia/" target="_blank"><i class=" fab fa-facebook-f"></i></a>
-            <a href="https://www.reddit.com/r/netflix/" target="_blank"><i class=" fab fa-reddit-alien"></i></a>
-            <a href="https://www.youtube.com/channel/UCWOA1ZGywLbqmigxE4Qlvuw" target="_blank"><i
-                    class=" fab fa-youtube"></i></a>
+<footer class="py-3 background-dark-accent">
+    <div class="d-flex flex-column align-items-center justify-content-center">
+        <a class="title footer-title movie-list" href="/">
+            Movie<span>List</span>
+        </a>
+        <div class="text-center movie-list">
+            Movie<span style="color: #fffff">List is a Website that contains list of movies.</span>
         </div>
-        <ul class="d-flex justify-content-center list-unstyled terms-list">
-            <li><a href="https://help.netflix.com/legal/privacy" target="_blank">Privacy Policy</a></li>
-            <li><a href="https://help.netflix.com/legal/termsofuse" target="_blank">Terms of Service</a></li>
-            <li><a href="https://help.netflix.com/en/contactus" target="_blank">Contact Us</a></li>
-            <li><a href="https://help.netflix.com/en/" target="_blank">About Us</a></li>
-        </ul>
-        <p class="footer-copyright">Copyright &copy; 2022 <a href="{{ route('show-home') }}"
-                class="fw-bolder footer-link">Movie<span class="text-light">List</span></a> All
-            Rights
-            Reserved
-        </p>
+        <div class="footer-icons">
+            <a target="_blank" href="https://twitter.com/"><i class="fa-brands fa-twitter circle-icon"></i></a>
+            <a target="_blank" href="https://www.instagram.com/"><i class="fa-brands fa-instagram circle-icon"></i></a>
+            <a target="_blank" href="https://www.facebook.com/"><i class="fa-brands fa-facebook circle-icon"></i></a>
+            <a target="_blank" href="https://www.reddit.com/"><i class="fa-brands fa-reddit-alien circle-icon"></i></a>
+            <a target="_blank" href="https://www.youtube.com/"><i class="fa-brands fa-youtube circle-icon"></i></a>
+        </div>
+        <div class="footer-links">
+            <a href="">Privacy Policy</a>
+            <div></div>
+            <a href="">Terms of Service</a>
+            <div></div>
+            <a href="">Contact Us</a>
+            <div></div>
+            <a href="">About Us</a>
+        </div>
+        <div class="text-center d-flex flex-row movie-list">
+            <span>Copyright &copy 2022</span>&nbsp;
+            Movie
+            <span>List All Rights Reserved.</span>
+        </div>
     </div>
 </footer>

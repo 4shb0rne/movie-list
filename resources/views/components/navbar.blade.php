@@ -1,60 +1,47 @@
-<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #1F1F1F">
-    <div class="container">
-        <a class="navbar-brand logo fs-2" href="{{ route('show-home') }}">
-            Movie<span class="text-light">List</span>
+<nav class="navbar navbar-expand-lg background-dark-accent navbar-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand title movie-list" href="/">
+            Movie<span>List</span>
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav ms-auto">
+        <div class="collapse navbar-collapse justify-content-end px-5" id="navbarNavDropdown">
+            <ul class="navbar-nav">
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="{{ route('show-home') }}">Home</a>
+                    <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page"
-                        href="{{ request()->is('/') ? '' : '/' }}#movie-section">Movies</a>
+                    <a class="nav-link active" href="/">Movies</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link text-light" aria-current="page" href="{{ route('show-actor') }}">Actors</a>
+                    <a class="nav-link active" href="{{ route('show-actor') }}">Actors</a>
                 </li>
                 @auth
                     @if (!auth()->user()->isAdmin())
                         <li class="nav-item">
-                            <a class="nav-link text-light" aria-current="page" href="{{ route('show-watchlist') }}">My
-                                Watchlist</a>
+                            <a class="nav-link active" href="/watchlist">My Watchlists</a>
                         </li>
                     @endif
-                    <li class="nav-item dropdown fs-3 d-flex align-items-center mx-3">
-                        @if (Auth::user()->image_url)
-                            <span class="nav-link p-0 d-flex" href="#" id="navbarDropdownMenuLink" role="button"
-                                data-bs-toggle="dropdown" aria-expanded="false">
-                                <img src="{{ Auth::user()->image_url }}" class="rounded-circle"
-                                    style="width : 1.5rem;height : 1.5rem;object-fit: cover">
-                            </span>
-                        @else
-                            <span class="nav-link p-0" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-                                aria-expanded="false">
-                                <i class="fas fa-user-circle"></i>
-                            </span>
-                        @endif
-                        <ul class="dropdown-menu dropdown-menu-end p-3">
-                            <li><a class="dropdown-item" href=" {{ route('show-profile') }} ">Profile</a>
-                            </li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
+                    <li class="nav-item dropdown d-flex align-items-center">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-circle-user fs-4"></i>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('view-profile') }}">Profile</a></li>
                             <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
                         </ul>
                     </li>
                 @endauth
                 @guest
-                    <li class="nav-item px-lg-3">
-                        <a class="btn btn-primary" role="button" href="{{ route('show-register') }}">Register</a>
+                    <li class="nav-item mx-2">
+                        <a href="{{ route('login') }}" class="btn btn-primary">Login</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="btn btn-outline-primary" role="button" href="{{ route('show-login') }}">Login</a>
+
+                    <li class="nav-item mx-2">
+                        <a href="{{ route('register') }}" class="btn btn-outline-primary">Register</a>
                     </li>
                 @endguest
             </ul>
