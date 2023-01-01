@@ -7,7 +7,7 @@
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse justify-content-end px-3" id="navbarNavDropdown">
+        <div class="collapse navbar-collapse justify-content-end px-5" id="navbarNavDropdown">
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
@@ -19,15 +19,20 @@
                     <a class="nav-link active" href="{{ route('show-actor') }}">Actors</a>
                 </li>
                 @auth
-                    @if(!auth()->user()->isAdmin())
+                    @if (!auth()->user()->isAdmin())
                         <li class="nav-item">
                             <a class="nav-link active" href="/watchlist">My Watchlists</a>
                         </li>
                     @endif
-                    <li class="nav-item d-flex alignt-items-center">
-                        <a class="nav-link active" href="{{ route('view-profile') }}">
-                            <i class="fa-solid fa-circle-user" style="font-size: 1.2rem"></i>
+                    <li class="nav-item dropdown d-flex align-items-center">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            <i class="fa-solid fa-circle-user fs-4"></i>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="{{ route('view-profile') }}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{{ route('logout') }}">Logout</a></li>
+                        </ul>
                     </li>
                 @endauth
                 @guest

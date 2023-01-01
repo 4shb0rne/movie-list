@@ -173,3 +173,7 @@ a:visited {
     height: 5rem;
     object-fit: contain;
 }
+
+.dropdown-menu {
+    min-width: auto !important;
+}

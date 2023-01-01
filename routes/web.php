@@ -18,6 +18,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [MovieController::class, 'index'])->name('home');
+Route::get('/logout', [AuthController::class, 'logout'])->middleware('auth')->name('logout');
+
 Route::prefix('/movie')->middleware([AuthAdmin::class])->group(function () {
     Route::get('/add', [MovieController::class, 'create'])->name('create-movie');
     Route::post('/add', [MovieController::class, 'validateCreate'])->name('validate-create-movie');
