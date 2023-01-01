@@ -45,37 +45,4 @@ $(document).ready(function () {
         });
     }
 
-    function watchListActions() {
-        const actionInput = $('.actionInput')
-        actionInput.each(function (indexInArray, valueOfElement) {
-            $(this).off('change')
-            $(this).on('change', function (e) {
-                e.preventDefault()
-                $.ajaxSetup({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-                $.ajax({
-                    url: "/action/"+$(this).attr('id'),
-                    type: "POST",
-                    data: {
-                        'status': $(this).val(),
-                    },
-                    contentType: false,
-                    processData: false,
-                    error: (data) => {
-                        console.log(data.responseJSON);
-                    },
-                    // success: (data) => {
-                    //     if (data.isAdd) {
-                    //         $(this).html('<i class="fas fa-check text-danger"></i>');
-                    //     } else {
-                    //         $(this).html('<i class="fas fa-plus text-muted"></i>');
-                    //     }
-                    // }
-                })
-            });
-        });
-    }
 });
