@@ -1,0 +1,22 @@
+.watchlist-image {
+    width: 50%;
+    height: 240px;
+    object-fit: contain;
+}
+
+/* d-flex flex-justify-center align-items-center mb-3 .background-dark-accent */
+.watchlist-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(35, 35, 35);
+}
+
+.image-container {
+    padding-left: 0 !important;
+}
+
+.btn-icon:hover > i {
+    color: #E50914;
+    transition: 0.2s;
+}

@@ -15,45 +15,67 @@ class WatchListController extends Controller
     public function index(Request $request)
     {
         $user = Auth::user();
-        if ($request->ajax() && !$request->filter) {
-            if ($request->search == '') {
-                $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)
-                    ->get();
-                $view = view('watchlists.data', compact('watchlists'))->render();
-                return response()->json(['html' => $view]);
-            } else {
-                $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)
-                    ->where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
-                $view = view('watchlists.data', compact('watchlists'))->render();
-                return response()->json(['html' => $view]);
-            }
-        } else if ($request->ajax() && $request->filter) {
-            if ($request->search == '') {
-                if ($request->filter != 'all') {
-                    $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->where('watchlists.status', $request->filter)
-                        ->get();
-                    $view = view('watchlists.data', compact('watchlists'))->render();
-                    return response()->json(['html' => $view]);
-                } else if ($request->filter == 'all') {
-                    $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->get();
-                    $view = view('watchlists.data', compact('watchlists'))->render();
-                    return response()->json(['html' => $view]);
-                }
-            } else {
-                if ($request->filter == 'all') {
-                    $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
-                    $view = view('watchlists.data', compact('watchlists'))->render();
-                    return response()->json(['html' => $view]);
-                } else {
-                    $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->where('movies.title', 'LIKE', '%' . $request->search . '%')->where('watchlists.status', $request->filter)
-                        ->get();
-                    $view = view('watchlists.data', compact('watchlists'))->render();
-                    return response()->json(['html' => $view]);
-                }
-            }
-        }
+        $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')
+            ->where('watchlists.user_id', $user->id)
+            ->paginate(4);
 
-        $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->paginate(4);
+        if ($request->ajax()) {
+            $filter = $request->filter;
+            $search = $request->search;
+            $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')
+                ->where('watchlists.user_id', $user->id);
+            if ($search && $search != "") {
+                $watchlists = $watchlists->where('movies.title', 'LIKE', '%' . $request->search . '%');
+            }
+
+            if ($filter && $filter != "All") {
+                $watchlists = $watchlists
+                    ->where('watchlists.status', 'LIKE', '%' . $request->search . '%')
+                    ->where('watchlists.status', $request->filter);
+            }
+            $watchlists = $watchlists->paginate(4);
+            $view = view('watchlists.card', compact('watchlists'))->render();
+            return response()->json(['view' => $view]);
+        }
+        // if ($request->ajax() && !$request->filter) {
+        //     if ($request->search == '') {
+        //         $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)
+        //             ->get();
+        //         $view = view('watchlists.data', compact('watchlists'))->render();
+        //         return response()->json(['html' => $view]);
+        //     } else {
+        //         $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)
+        //             ->where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
+        //         $view = view('watchlists.data', compact('watchlists'))->render();
+        //         return response()->json(['html' => $view]);
+        //     }
+        // } else if ($request->ajax() && $request->filter) {
+        //     if ($request->search == '') {
+        //         if ($request->filter != 'all') {
+        //             $watchlists = Movie::join('watchl)ists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->where('watchlists.status', $request->filter
+        //                 ->get();
+        //             $view = view('watchlists.data', compact('watchlists'))->render();
+        //             return response()->json(['html' => $view]);
+        //         } else if ($request->filter == 'all') {
+        //             $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->get();
+        //             $view = view('watchlists.data', compact('watchlists'))->render();
+        //             return response()->json(['html' => $view]);
+        //         }
+        //     } else {
+        //         if ($request->filter == 'all') {
+        //             $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->where('movies.title', 'LIKE', '%' . $request->search . '%')->get();
+        //             $view = view('watchlists.data', compact('watchlists'))->render();
+        //             return response()->json(['html' => $view]);
+        //         } else {
+        //             $watchlists = Movie::join('watchlists', 'movies.id', '=', 'watchlists.movie_id')->where('watchlists.user_id', $user->id)->where('movies.title', 'LIKE', '%' . $request->search . '%')->where('watchlists.status', $request->filter)
+        //                 ->get();
+        //             $view = view('watchlists.data', compact('watchlists'))->render();
+        //             return response()->json(['html' => $view]);
+        //         }
+        //     }
+        // }
+
+        // dd($watchlists);
         return view('watchlists.index', compact('watchlists'));
     }
 
@@ -92,16 +114,19 @@ class WatchListController extends Controller
 
     public function action(Request $request, Movie $movie)
     {
-        $this->authorize('updateWatchList', $movie);
-        $user = Auth::user();
-        if ($request->status == 'planning' || $request->status == 'finished' || $request->status == 'watching') {
-            DB::table('watchlists')->where('user_id', $user->id)->where('movie_id', $movie->id)->update([
-                'status' => ucfirst($request->status)
-            ]);
-        } else if ($request->status == 'remove') {
-            $watchlist = Watchlist::where('user_id', $user->id)->where('movie_id', $movie->id)->delete();
-        }
+        if ($request->status != "Remove" && $request->status != "Planning" && $request->status != "Watching" && $request->status != "Finished") {
+            return redirect('/watchlist?page=' . $request->page);
+        };
 
-        return redirect('/watchlist?page=' . $request->page)->with('success-info', 'Watchlist has been updated');
+        $user = Auth::user();
+        $watchlist = Watchlist::where('user_id', $user->id)->where('movie_id', $movie->id);
+        $this->authorize('updateWatchList', $movie);
+
+        if ($request->status == "Remove") {
+            $watchlist->delete();
+        } else if ($request->status != $watchlist->first()->status) {
+            $watchlist->update(['status' => $request->status]);
+        }
+        return redirect('/watchlist?page=' . $request->page);
     }
 }

@@ -13,3 +13,11 @@
 .color-red {
     color: #E50914;
 }
+
+.color-green {
+    color: #31c400;
+}
+
+.border-light {
+    border: 1px solid white !important;
+}

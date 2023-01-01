@@ -21,7 +21,7 @@
                 @auth
                     @if(!auth()->user()->isAdmin())
                         <li class="nav-item">
-                            <a class="nav-link active" href="/">My Wihslists</a>
+                            <a class="nav-link active" href="/watchlist">My Watchlists</a>
                         </li>
                     @endif
                     <li class="nav-item d-flex alignt-items-center">
