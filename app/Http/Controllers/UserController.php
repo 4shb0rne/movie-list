@@ -28,13 +28,24 @@ class UserController extends Controller
             return redirect('/profile');
         }
 
-        $attr = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'dob' => 'required|date',
-            'phone' => 'required|min:5|max:13',
-        ]);
-        $user->update($attr);
+        if ($user->email == $request->email) {
+            $attr = $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'dob' => 'required|date',
+                'phone' => 'required|min:5|max:13',
+            ]);
+            $user->update($attr);
+        } else {
+            $attr = $request->validate([
+                'name' => 'required',
+                'email' => 'required|email|unique:users',
+                'dob' => 'required|date',
+                'phone' => 'required|min:5|max:13',
+            ]);
+            $user->update($attr);
+        }
+
         return redirect('/profile');
     }
 }
